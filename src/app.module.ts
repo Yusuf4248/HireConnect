@@ -1,6 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { JobSkillsModule } from './job_skills/job_skills.module';
+import { JobCategoriesModule } from './job_categories/job_categories.module';
+import { JobsModule } from './jobs/jobs.module';
+import { JobSeekerSkillsModule } from './job_seeker_skills/job_seeker_skills.module';
 
 @Module({
   imports: [
@@ -17,6 +21,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       autoLoadEntities: true,
       dropSchema: false,
     }),
+    JobSkillsModule,
+    JobCategoriesModule,
+    JobsModule,
+    JobSeekerSkillsModule,
   ],
   controllers: [],
   providers: [],
