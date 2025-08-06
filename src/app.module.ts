@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       autoLoadEntities: true,
       dropSchema: false,
     }),
+    SkillsModule,
   ],
   controllers: [],
   providers: [],
