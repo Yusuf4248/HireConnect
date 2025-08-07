@@ -28,13 +28,33 @@
 ## Project setup
 
 ```bash
+<<<<<<< HEAD
+<<<<<<< HEAD
+$ yarn install
+=======
 $ npm install
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
+=======
+$ npm install
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 ```
 
 ## Compile and run the project
 
 ```bash
 # development
+<<<<<<< HEAD
+<<<<<<< HEAD
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
+=======
+=======
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 $ npm run start
 
 # watch mode
@@ -42,12 +62,28 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+<<<<<<< HEAD
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
+=======
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 ```
 
 ## Run tests
 
 ```bash
 # unit tests
+<<<<<<< HEAD
+<<<<<<< HEAD
+$ yarn run test
+
+# e2e tests
+$ yarn run test:e2e
+
+# test coverage
+$ yarn run test:cov
+=======
+=======
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 $ npm run test
 
 # e2e tests
@@ -55,6 +91,10 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+<<<<<<< HEAD
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
+=======
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 ```
 
 ## Deployment
@@ -64,7 +104,15 @@ When you're ready to deploy your NestJS application to production, there are som
 If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
 ```bash
+<<<<<<< HEAD
+<<<<<<< HEAD
+$ yarn install -g @nestjs/mau
+=======
 $ npm install -g @nestjs/mau
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
+=======
+$ npm install -g @nestjs/mau
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 $ mau deploy
 ```
 
