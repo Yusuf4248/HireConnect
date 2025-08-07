@@ -1,6 +1,10 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "headhunter",
+=======
+  "name": "hire_connect",
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 =======
   "name": "hire_connect",
 >>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
@@ -24,6 +28,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+<<<<<<< HEAD
 <<<<<<< HEAD
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
@@ -65,6 +70,8 @@
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
 =======
+=======
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
     "@apollo/server": "^4.12.1",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^13.1.0",
@@ -134,6 +141,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.0"
+<<<<<<< HEAD
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
+=======
 >>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
   },
   "jest": {
@@ -153,8 +163,12 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
 <<<<<<< HEAD
+<<<<<<< HEAD
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+=======
+  }
+>>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
 =======
   }
 >>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf

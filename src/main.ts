@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000,()=>{
-    console.log(`Server WORKING IN PORT ${process.env.PORT}`);
-    
-  });
-}
-bootstrap();
-=======
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
@@ -57,4 +44,3 @@ async function start() {
   }
 }
 start();
->>>>>>> 910ea9c143a778a23840f722bac0d635cdfcc8cf
