@@ -3,6 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from './users/users.module';
 import { JobSeekersModule } from './job_seekers/job_seekers.module';
+import { HrSpecialistsModule } from './hr_specialists/hr_specialists.module';
+import { WorkExperienceModule } from './work_experience/work_experience.module';
 
 @Module({
   imports: [
@@ -14,13 +16,15 @@ import { JobSeekersModule } from './job_seekers/job_seekers.module';
       username: process.env.PG_USER,
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DB,
-      entities: [],
+      entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
       autoLoadEntities: true,
       dropSchema: false,
     }),
     UsersModule,
     JobSeekersModule,
+    HrSpecialistsModule,
+    WorkExperienceModule,
   ],
   controllers: [],
   providers: [],

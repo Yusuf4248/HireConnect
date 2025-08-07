@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { JobSeeker } from "../../job_seekers/entities/job_seeker.entity";
+import { HrSpecialist } from "../../hr_specialists/entities/hr_specialist.entity";
 
 @Entity("users")
 export class User {
@@ -33,8 +34,8 @@ export class User {
   @OneToMany(() => JobSeeker, (jobSeeker) => jobSeeker.user)
   jobSeekers: JobSeeker[];
 
-//   @OneToMany(() => HrSpecialist, (hrSpecialist) => hrSpecialist.user)
-//   hrSpecialists: HrSpecialist[];
+  @OneToMany(() => HrSpecialist, (hrSpecialist) => hrSpecialist.user)
+  hrSpecialists: HrSpecialist[];
 
 //   @OneToMany(() => JobApplication, (jobApplication) => jobApplication.jobSeeker)
 //   jobApplications: JobApplication[];

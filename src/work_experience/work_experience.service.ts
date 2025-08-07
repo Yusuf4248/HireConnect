@@ -1,45 +1,42 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateJobSeekerDto } from "./dto/create-job_seeker.dto";
-import { UpdateJobSeekerDto } from "./dto/update-job_seeker.dto";
+import { CreateWorkExperienceDto } from "./dto/create-work_experience.dto";
+import { UpdateWorkExperienceDto } from "./dto/update-work_experience.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { JobSeeker } from "./entities/job_seeker.entity";
+import { WorkExperience } from "./entities/work_experience.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
-export class JobSeekersService {
+export class WorkExperienceService {
   constructor(
-    @InjectRepository(JobSeeker)
-    private readonly jobSeeker: Repository<JobSeeker>
+    @InjectRepository(WorkExperience)
+    private readonly workExpRepo: Repository<WorkExperience>
   ) {}
-  create(createJobSeekerDto: CreateJobSeekerDto) {
-    return this.jobSeeker.save(createJobSeekerDto);
+  create(createWorkExperienceDto: CreateWorkExperienceDto) {
+    return this.workExpRepo.save(createWorkExperienceDto);
   }
 
   findAll() {
-    return this.jobSeeker.find();
+    return this.workExpRepo.find();
   }
 
   async findOne(id: number) {
-    const user = await this.jobSeeker.findOne({
+    const user = await this.workExpRepo.findOne({
       where: { id },
     });
 
     if (!user) {
-      throw new NotFoundException(`Jobsekker with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
     return user;
   }
 
-  async update(
-    id: number,
-    updateJobSeekerDto: UpdateJobSeekerDto
-  ): Promise<JobSeeker> {
+  async update(id: number, updateWorkExperienceDto: UpdateWorkExperienceDto) {
     try {
       // Check if job seeker exists
       const existingJobSeeker = await this.findOne(id);
 
       // Update the job seeker
-      await this.jobSeeker.update(id, updateJobSeekerDto);
+      await this.workExpRepo.update(id, updateWorkExperienceDto);
 
       // Return updated job seeker
       return await this.findOne(id);
@@ -52,7 +49,7 @@ export class JobSeekersService {
   }
 
   async remove(id: number) {
-    const result = await this.jobSeeker.delete(id);
+    const result = await this.workExpRepo.delete(id);
 
     if (result.affected === 0) {
       throw new NotFoundException(`User with ID ${id} not found`);

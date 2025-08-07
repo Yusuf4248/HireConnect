@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../../users/entities/user.entity";
+import { WorkExperience } from "../../work_experience/entities/work_experience.entity";
 
 @Entity("job_seekers")
 export class JobSeeker {
@@ -65,8 +66,8 @@ export class JobSeeker {
 //   @OneToMany(() => Resume, (resume) => resume.jobSeeker)
 //   resumes: Resume[];
 
-//   @OneToMany(() => WorkExperience, (workExperience) => workExperience.jobSeeker)
-//   workExperiences: WorkExperience[];
+  @OneToMany(() => WorkExperience, (workExperience) => workExperience.jobSeeker)
+  workExperiences: WorkExperience[];
 
 //   @OneToMany(() => Education, (education) => education.jobSeeker)
 //   educations: Education[];
