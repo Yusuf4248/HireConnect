@@ -13,10 +13,13 @@ import { SkillsModule } from './skills/skills.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { EducationModule } from './education/education.module';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
+import { WinstonModule } from "nest-winston";
+import { winstonConfig } from "./common/logger/winston.logger";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
+    WinstonModule.forRoot(winstonConfig),
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.PG_HOST,
