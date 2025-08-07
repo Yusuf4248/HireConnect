@@ -19,7 +19,7 @@ import { WorkExperienceModule } from './work_experience/work_experience.module';
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
       autoLoadEntities: true,
-      dropSchema: false,
+      dropSchema: false
     }),
     UsersModule,
     JobSeekersModule,
