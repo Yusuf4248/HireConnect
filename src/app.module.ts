@@ -1,6 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { JobSkillsModule } from './job_skills/job_skills.module';
+import { JobCategoriesModule } from './job_categories/job_categories.module';
+import { JobsModule } from './jobs/jobs.module';
+import { JobSeekerSkillsModule } from './job_seeker_skills/job_seeker_skills.module';
 import { UsersModule } from './users/users.module';
 import { JobSeekersModule } from './job_seekers/job_seekers.module';
 import { HrSpecialistsModule } from './hr_specialists/hr_specialists.module';
@@ -9,7 +13,6 @@ import { SkillsModule } from './skills/skills.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { EducationModule } from './education/education.module';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
-
 
 @Module({
   imports: [
@@ -26,6 +29,10 @@ import { JobApplicationsModule } from './job-applications/job-applications.modul
       autoLoadEntities: true,
       dropSchema: false
     }),
+    JobSkillsModule,
+    JobCategoriesModule,
+    JobsModule,
+    JobSeekerSkillsModule,
     UsersModule,
     JobSeekersModule,
     HrSpecialistsModule,
