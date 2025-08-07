@@ -8,7 +8,7 @@ import {
   MaxLength,
   MinLength,
 } from "class-validator";
-import { SkillCategoryEnums } from "../entities/skill.entity";
+import { SkillCategoryEnums } from "../../common/enums/skill.enum";
 
 export class CreateSkillDto {
   @ApiProperty({
