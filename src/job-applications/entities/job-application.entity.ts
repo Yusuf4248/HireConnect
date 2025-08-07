@@ -1,14 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
-export enum JobApplicationStatuses {
-  PENDING = "pending",
-  REVIEWED = "reviewed",
-  INTERVIEW = "interview",
-  ACCEPTED = "accepted",
-  REJECTED = "rejected",
-  WITHDRAWN = "withdrawn",
-}
+import { JobApplicationStatuses } from "../../common/enums/job_application.enum";
 
 @Entity("job-application")
 export class JobApplication {

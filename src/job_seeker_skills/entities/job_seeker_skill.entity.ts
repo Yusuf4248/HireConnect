@@ -8,8 +8,6 @@ import {
 } from "typeorm";
 import { ProficiencyLevel } from "../../common/enums/job_seeker_skills.enum";
 
-
-
 @Entity("job_seeker_skills")
 @Unique(["jobSeekerId", "skillId"])
 export class JobSeekerSkill {

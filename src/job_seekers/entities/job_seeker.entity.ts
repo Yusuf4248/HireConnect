@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { User } from "../../users/entities/user.entity";
 import { WorkExperience } from "../../work_experience/entities/work_experience.entity";
 
@@ -8,7 +17,7 @@ export class JobSeeker {
   id: number;
 
   @Column()
-  user_id: string; 
+  user_id: string;
 
   @Column({ type: "varchar", length: 100 })
   first_name: string;
@@ -63,22 +72,22 @@ export class JobSeeker {
   @JoinColumn({ name: "user_id" })
   user: User;
 
-//   @OneToMany(() => Resume, (resume) => resume.jobSeeker)
-//   resumes: Resume[];
+  //   @OneToMany(() => Resume, (resume) => resume.jobSeeker)
+  //   resumes: Resume[];
 
   @OneToMany(() => WorkExperience, (workExperience) => workExperience.jobSeeker)
   workExperiences: WorkExperience[];
 
-//   @OneToMany(() => Education, (education) => education.jobSeeker)
-//   educations: Education[];
+  //   @OneToMany(() => Education, (education) => education.jobSeeker)
+  //   educations: Education[];
 
-//   @OneToMany(() => JobSeekerSkill, (jobSeekerSkill) => jobSeekerSkill.jobSeeker)
-//   jobSeekerSkills: JobSeekerSkill[];
+  //   @OneToMany(() => JobSeekerSkill, (jobSeekerSkill) => jobSeekerSkill.jobSeeker)
+  //   jobSeekerSkills: JobSeekerSkill[];
 
-//   @OneToMany(() => JobApplication, (jobApplication) => jobApplication.jobSeeker)
-//   jobApplications: JobApplication[];
+  //   @OneToMany(() => JobApplication, (jobApplication) => jobApplication.jobSeeker)
+  //   jobApplications: JobApplication[];
 
-//   @ManyToOne(() => Contact, (contact) => contact.jobSeekers)
-//   @JoinColumn({ name: "contact_id" })
-//   contact: Contact;
+  //   @ManyToOne(() => Contact, (contact) => contact.jobSeekers)
+  //   @JoinColumn({ name: "contact_id" })
+  //   contact: Contact;
 }
