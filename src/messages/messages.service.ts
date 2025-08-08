@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './messages.model';
 import { Repository } from 'typeorm';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class MessagesService {
@@ -10,9 +12,9 @@ export class MessagesService {
     private messageRepository: Repository<Message>,
   ) {}
 
-  async create(data: Partial<Message>): Promise<Message> {
-    const msg = this.messageRepository.create(data);
-    return this.messageRepository.save(msg);
+  async create(data: Partial<CreateCommentDto>): Promise<Message> {
+    const msg = this.messageRepository.create(data as any);
+    return this.messageRepository.save(msg as any);
   }
 
   async findAll(): Promise<Message[]> {
@@ -28,7 +30,7 @@ export class MessagesService {
     return message;
   }
 
-  async update(id: number, data: Partial<Message>): Promise<Message> {
+  async update(id: number, data: Partial<UpdateCommentDto>): Promise<Message> {
     const msg = await this.findOne(id);
     Object.assign(msg, data);
     return this.messageRepository.save(msg);

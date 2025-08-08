@@ -13,6 +13,8 @@ import { SkillsModule } from './skills/skills.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { EducationModule } from './education/education.module';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
+import { ChatsModule } from "./chat/chat.module";
+import { MessagesModule } from "./messages/messages.module";
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { JobApplicationsModule } from './job-applications/job-applications.modul
       dropSchema: false
     }),
     JobSkillsModule,
+    ChatsModule,
+    MessagesModule,
     JobCategoriesModule,
     JobsModule,
     JobSeekerSkillsModule,

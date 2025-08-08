@@ -1,13 +1,15 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
 import { ChatsService } from './chat.service';
-import { Chat } from './chat.model';
+import { Chat } from './entities/chat.entity';
+import { CreateChatDto } from './dto/create-chat.dto';
+import { UpdateChatDto } from './dto/update-chat.dto';
 
 @Controller('chats')
 export class ChatsController {
-  constructor(private readonly chatsService: ChatsService) {}
+  constructor(private readonly chatsService: ChatsService) { }
 
   @Post()
-  create(@Body() data: Partial<Chat>) {
+  create(@Body() data: Partial<CreateChatDto>) {
     return this.chatsService.create(data);
   }
 
@@ -22,9 +24,9 @@ export class ChatsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() data: Partial<Chat>) {
+  update(@Param('id') id: number, @Body() data: Partial<UpdateChatDto>) {
     console.log('controller');
-    
+
     return this.chatsService.update(Number(id), data);
   }
 
