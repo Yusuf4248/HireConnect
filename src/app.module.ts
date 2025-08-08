@@ -15,6 +15,9 @@ import { EducationModule } from './education/education.module';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
 import { ChatsModule } from "./chat/chat.module";
 import { MessagesModule } from "./messages/messages.module";
+import { CompaniesModule } from "./companies/companies.module";
+import { AdminModule } from "./admin/admin.module";
+import { ResumeModule } from "./resume/resume.module";
 
 @Module({
   imports: [
@@ -33,7 +36,10 @@ import { MessagesModule } from "./messages/messages.module";
     }),
     JobSkillsModule,
     ChatsModule,
+    CompaniesModule,
     MessagesModule,
+    AdminModule,
+    ResumeModule,
     JobCategoriesModule,
     JobsModule,
     JobSeekerSkillsModule,

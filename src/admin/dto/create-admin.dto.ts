@@ -1,9 +1,12 @@
-import { IsBoolean, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAdminDto {
-    @IsNumber()
-    user_id:number
+  @ApiProperty({ description: 'User ID associated with the admin', type: Number, example: 123 })
+  @IsNumber()
+  user_id: number;
 
-    @IsBoolean()
-    isCreator:boolean 
+  @ApiProperty({ description: 'Whether the admin is a creator', type: Boolean, example: true })
+  @IsBoolean()
+  isCreator: boolean;
 }
