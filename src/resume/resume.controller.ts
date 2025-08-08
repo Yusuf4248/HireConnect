@@ -1,21 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
 import { ResumeService } from './resume.service';
 import { CreateResumeDto } from './dto/create-resume.dto';
 import { UpdateResumeDto } from './dto/update-resume.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiConsumes } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('resumes')
 @Controller('resumes')
 export class ResumeController {
-  constructor(private readonly resumeService: ResumeService) {}
+  constructor(private readonly resumeService: ResumeService) { }
 
   @Post()
+  @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Create a new resume' })
-  @ApiBody({ type: CreateResumeDto })
+  @ApiConsumes('multipart/form-data')
+
+
   @ApiResponse({ status: 201, description: 'Resume created successfully', type: CreateResumeDto })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
-  create(@Body() dto: CreateResumeDto) {
-    return this.resumeService.create(dto);
+async create(
+    @Body() dto: CreateResumeDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }), // 5MB max
+          new FileTypeValidator({ fileType: /(pdf|doc|docx)$/i }), 
+        ],
+      }),
+    ) file: Express.Multer.File,
+  ) {
+    return await this.resumeService.create(dto, file);
   }
 
   @Get()
