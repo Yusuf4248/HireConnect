@@ -19,10 +19,17 @@ export class JobsController {
     return this.jobsService.findAll();
   }
 
+@Get('search/:term')
+search(@Param('term') term: string) {
+  return this.jobsService.search(term);
+}
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.jobsService.findOne(+id);
   }
+
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
