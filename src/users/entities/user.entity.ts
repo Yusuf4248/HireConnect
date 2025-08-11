@@ -23,7 +23,7 @@ export class User {
  
 
   @Column({ type: "varchar", length: 255, nullable: true })
-  refresh_token: string;
+  refresh_token: string|null;
 
   @CreateDateColumn()
   created_at: Date;

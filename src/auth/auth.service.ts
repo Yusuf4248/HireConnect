@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +38,7 @@ export class AuthService {
     return { user: newUser, ...tokens };
   }
 
-  async login(dto: LoginAuthDto) {
+  async login(dto: LoginAuthDto, res: Response) {
     console.log(process.env.SECRET_KEY);
 
     const user = await this.usersRepo.findOne({ where: { email: dto.email } });
@@ -47,12 +48,42 @@ export class AuthService {
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
     const tokens = await this.generateTokens(user.id, user.role);
+
+    res.cookie('refresh_token', tokens.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: '/',
+    });
     await this.updateRefreshToken(user.id, tokens.refresh_token);
 
+    res.json({ message: "you logined!", access_token: tokens.access_token })
     return { user, ...tokens };
   }
 
-  async refreshTokens(refreshToken: string) {
+  async logout(refreshToken: string, res: Response) {
+    if (!refreshToken) throw new UnauthorizedException();
+
+    try {
+      const payload = this.jwtService.verify(refreshToken, {
+        secret: process.env.SECRET_KEY,
+      });
+
+
+      await this.usersRepo.update(payload.sub, { refresh_token: null });
+
+
+      res.clearCookie('refresh_token');
+
+      return { message: 'Logged out successfully' };
+    } catch {
+      throw new UnauthorizedException();
+    }
+  }
+
+
+  async refreshTokens(refreshToken: string,res:Response) {
     try {
       const payload = this.jwtService.verify(refreshToken, {
         secret: process.env.SECRET_KEY,
@@ -65,9 +96,18 @@ export class AuthService {
       if (!isMatch) throw new UnauthorizedException();
 
       const tokens = await this.generateTokens(user.id, user.role);
+
+      res.cookie('refresh_token', tokens.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: '/',
+      });
       await this.updateRefreshToken(user.id, tokens.refresh_token);
 
-      return tokens;
+      res.json({message:"token refreshed",tokens:{tokens}})
+
     } catch (err) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
