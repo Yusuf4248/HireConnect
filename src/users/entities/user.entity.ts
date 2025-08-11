@@ -17,7 +17,7 @@ export class User {
   @Column({ type: "enum", enum: ["user", "admin", "hr"], default: "user" })
   role: string;
 
-  @Column({ type: "boolean", default: true })
+  @Column({ type: "boolean", default: false })
   is_active: boolean;
 
  

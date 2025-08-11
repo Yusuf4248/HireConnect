@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -37,6 +37,14 @@ export class AuthController {
     const refresh_token = req.cookies?.refresh_token;
     return this.authService.refreshTokens(refresh_token, res);
   }
+
+
+@Get('activate/:token')
+@ApiOperation({ summary: 'Activate user account' })
+async activate(@Param('token') token: string) {
+  console.log('Activate endpoint hit with token:', token);
+  return this.authService.activate(token);
+}
 
 
 }
