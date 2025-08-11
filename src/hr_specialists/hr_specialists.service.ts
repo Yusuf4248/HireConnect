@@ -4,6 +4,7 @@ import { UpdateHrSpecialistDto } from "./dto/update-hr_specialist.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { HrSpecialist } from "./entities/hr_specialist.entity";
 import { Repository } from "typeorm";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class HrSpecialistsService {
@@ -11,8 +12,18 @@ export class HrSpecialistsService {
     @InjectRepository(HrSpecialist)
     private readonly hrSpecRepo: Repository<HrSpecialist>
   ) {}
-  create(createHrSpecialistDto: CreateHrSpecialistDto) {
-    return this.hrSpecRepo.save(createHrSpecialistDto);
+  async create(createHrSpecialistDto: CreateHrSpecialistDto) {
+   const hashedPassword = await bcrypt.hash(
+     createHrSpecialistDto.password_hash,
+     7,
+   );
+   
+       const user = this.hrSpecRepo.create({
+         ...createHrSpecialistDto,
+         password_hash: hashedPassword,
+       });
+   
+       return this.hrSpecRepo.save(user);
   }
 
   findAll() {

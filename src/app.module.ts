@@ -5,7 +5,6 @@ import { JobSkillsModule } from './job_skills/job_skills.module';
 import { JobCategoriesModule } from './job_categories/job_categories.module';
 import { JobsModule } from './jobs/jobs.module';
 import { JobSeekerSkillsModule } from './job_seeker_skills/job_seeker_skills.module';
-import { UsersModule } from './users/users.module';
 import { JobSeekersModule } from './job_seekers/job_seekers.module';
 import { HrSpecialistsModule } from './hr_specialists/hr_specialists.module';
 import { WorkExperienceModule } from './work_experience/work_experience.module';
@@ -53,7 +52,6 @@ import { MailModule } from "./mail/mail.module";
     JobCategoriesModule,
     JobsModule,
     JobSeekerSkillsModule,
-    UsersModule,
     JobSeekersModule,
     HrSpecialistsModule,
     WorkExperienceModule,
