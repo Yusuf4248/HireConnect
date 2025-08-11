@@ -19,7 +19,7 @@ export class JobCategoriesService {
 
   async findAll(): Promise<JobCategory[]> {
     return this.jobCategoryRepository.find({
-      relations: ["parent"], // agar bog‘langan parent bo‘lsa
+      relations: ["parent"],
     });
   }
 
