@@ -19,6 +19,9 @@ import { CompaniesModule } from "./companies/companies.module";
 import { AdminModule } from "./admin/admin.module";
 import { ResumeModule } from "./resume/resume.module";
 import { AuthModule } from './auth/auth.module';
+import { WinstonModule } from "nest-winston";
+import { winstonConfig } from "./common/logger/winston.logger";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
