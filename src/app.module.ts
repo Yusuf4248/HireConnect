@@ -22,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
 import { WinstonModule } from "nest-winston";
 import { winstonConfig } from "./common/logger/winston.logger";
 import { JwtModule } from "@nestjs/jwt";
+import { MailModule } from "./mail/mail.module";
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { JwtModule } from "@nestjs/jwt";
     EducationModule,
     JobApplicationsModule,
     AuthModule,
+    MailModule
   ],
   controllers: [],
   providers: [],

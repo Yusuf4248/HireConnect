@@ -7,6 +7,7 @@ import { User } from '../users/entities/user.entity';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Response } from 'express';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly usersRepo: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) { }
 
   async register(dto: CreateAuthDto) {
@@ -28,9 +30,27 @@ export class AuthService {
       email: dto.email,
       password_hash: hashed,
       role: dto.role || 'user',
+      is_active: false
     });
 
+
+
     await this.usersRepo.save(newUser);
+
+
+    console.log(newUser.id);
+
+    const activationToken = await this.jwtService.signAsync(
+      { sub: newUser.id },
+      { expiresIn: '1h' }
+    );
+
+
+    await this.mailService.sendActivationLink({
+      email: newUser.email,
+      token: activationToken,
+      name: dto.role || 'Foydalanuvchi',
+    });
 
     const tokens = await this.generateTokens(newUser.id, newUser.role);
     await this.updateRefreshToken(newUser.id, tokens.refresh_token);
@@ -83,7 +103,7 @@ export class AuthService {
   }
 
 
-  async refreshTokens(refreshToken: string,res:Response) {
+  async refreshTokens(refreshToken: string, res: Response) {
     try {
       const payload = this.jwtService.verify(refreshToken, {
         secret: process.env.SECRET_KEY,
@@ -106,7 +126,7 @@ export class AuthService {
       });
       await this.updateRefreshToken(user.id, tokens.refresh_token);
 
-      res.json({message:"token refreshed",tokens:{tokens}})
+      res.json({ message: "token refreshed", tokens: { tokens } })
 
     } catch (err) {
       throw new UnauthorizedException('Invalid or expired refresh token');
@@ -129,5 +149,34 @@ export class AuthService {
   private async updateRefreshToken(userId: number, refreshToken: string) {
     const hashedRefresh = await bcrypt.hash(refreshToken, 10);
     await this.usersRepo.update(userId, { refresh_token: hashedRefresh });
+  }
+
+
+
+  async activate(token: string) {
+
+    const payload = this.jwtService.verify(token, {
+      secret: process.env.SECRET_KEY,
+    });
+
+    console.log(payload);
+
+
+    const user = await this.usersRepo.findOne({ where: { id: payload.sub } });
+    if (!user) {
+      throw new BadRequestException('Invalid activation token');
+    }
+
+    console.log(user);
+
+    if (user.is_active) {
+      console.log(user.is_active);
+
+      throw new BadRequestException('User already activated');
+    }
+    const response = await this.usersRepo.update(user.id, { is_active: true });
+    console.log(response);
+
+    return { success: true, message: 'Account activated successfully' };
   }
 }
