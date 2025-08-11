@@ -6,13 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-
-export enum SkillCategoryEnums {
-  TECHNICAL = "TECHNICAL", // Programming, databases, tools ...
-  SOFT = "SOFT", // Communication, teamwork, problem-solving ...
-  LANGUAGE = "LANGUAGE", // English, Uzbek, Russian ...
-  MANAGEMENT = "MANAGEMENT", // Leadership, time management, planning ...
-}
+import { SkillCategoryEnums } from "../../common/enums/skill.enum";
 
 @Entity("skills")
 export class Skill {

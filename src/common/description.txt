@@ -1,0 +1,1 @@
+enums folderda table lar uchun ishlatilgan enum typelar yig'ilgan!
