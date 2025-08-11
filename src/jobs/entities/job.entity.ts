@@ -9,6 +9,8 @@ import {
 } from "typeorm";
 import { JobCategory } from "../../job_categories/entities/job_category.entity";
 import { EmploymentType, ExperienceLevel } from "../../common/enums/jobs.enum";
+import { HrSpecialist } from "src/hr_specialists/entities/hr_specialist.entity";
+import { Company } from "src/companies/entities/company.entity";
 
 @Entity("jobs")
 export class Job {
@@ -21,8 +23,10 @@ export class Job {
   @Column({ type: "int" })
   company_id: number;
 
+  
   @Column({ type: "int", nullable: true })
   category_id?: number;
+  
 
   @Column()
   title: string;
@@ -82,11 +86,11 @@ export class Job {
   @JoinColumn({ name: "category_id" })
   category?: JobCategory;
 
-  // @ManyToOne(() => Company)
-  // @JoinColumn({ name: "company_id" })
-  // company: Company;
+  @ManyToOne(() => Company)
+  @JoinColumn({ name: "company_id" })
+  company: Company;
 
-  // @ManyToOne(() => HrSpecialist)
-  // @JoinColumn({ name: "hr_specialist_id" })
-  // hr_specialist: HrSpecialist;
+  @ManyToOne(() => HrSpecialist)
+  @JoinColumn({ name: "hr_specialist_id" })
+  hr_specialist: HrSpecialist;
 }

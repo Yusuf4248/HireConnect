@@ -19,8 +19,7 @@ export class User {
   @Column({ type: "boolean", default: true })
   is_active: boolean;
 
-  @Column({ type: "boolean", default: false })
-  is_verified: boolean;
+ 
 
   @Column({ type: "varchar", length: 255, nullable: true })
   refresh_token: string;
