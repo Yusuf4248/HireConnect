@@ -1,12 +1,16 @@
-import { IsString, IsInt } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateChatDto {
-  @IsString()
-  chat_name: string;
+  @ApiProperty({ description: 'Application ID', type: Number })
+  application_id: number;
 
-  @IsInt()
-  user_id: number;
+  @ApiProperty({ description: 'HR ID', type: Number })
+  hr_id: number;
 
-  @IsInt()
-  worker_id: number;
+  @ApiProperty({ description: 'Job Seeker ID', type: Number })
+  job_seeker_id: number;
+
+  @ApiProperty({ description: 'Chat status', type: String, nullable: true })
+  status?: string;
 }
+

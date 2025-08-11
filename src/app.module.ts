@@ -12,8 +12,16 @@ import { SkillsModule } from './skills/skills.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { EducationModule } from './education/education.module';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
+import { ChatsModule } from "./chat/chat.module";
+import { MessagesModule } from "./messages/messages.module";
+import { CompaniesModule } from "./companies/companies.module";
+import { AdminModule } from "./admin/admin.module";
+import { ResumeModule } from "./resume/resume.module";
+import { AuthModule } from './auth/auth.module';
 import { WinstonModule } from "nest-winston";
 import { winstonConfig } from "./common/logger/winston.logger";
+import { JwtModule } from "@nestjs/jwt";
+import { MailModule } from "./mail/mail.module";
 
 @Module({
   imports: [
@@ -31,7 +39,16 @@ import { winstonConfig } from "./common/logger/winston.logger";
       autoLoadEntities: true,
       dropSchema: false
     }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY,
+      signOptions: { expiresIn: '15m' },
+    }),
     JobSkillsModule,
+    ChatsModule,
+    CompaniesModule,
+    MessagesModule,
+    AdminModule,
+    ResumeModule,
     JobCategoriesModule,
     JobsModule,
     JobSeekerSkillsModule,
@@ -42,6 +59,8 @@ import { winstonConfig } from "./common/logger/winston.logger";
     ContactsModule,
     EducationModule,
     JobApplicationsModule,
+    AuthModule,
+    MailModule
   ],
   controllers: [],
   providers: [],

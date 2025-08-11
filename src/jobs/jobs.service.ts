@@ -30,6 +30,20 @@ export class JobsService {
     return job;
   }
 
+  async search(term: string): Promise<Job[]> {
+  return this.jobRepository
+    .createQueryBuilder("job")
+    .leftJoinAndSelect("job.company", "company")
+    .leftJoinAndSelect("job.category", "category")
+    .where("LOWER(job.title) LIKE LOWER(:term)", { term: `%${term}%` })
+    .orWhere("LOWER(job.description) LIKE LOWER(:term)", { term: `%${term}%` })
+    .orWhere("LOWER(job.location) LIKE LOWER(:term)", { term: `%${term}%` })
+    .orWhere("LOWER(company.name) LIKE LOWER(:term)", { term: `%${term}%` })
+    .orderBy("job.created_at", "DESC")
+    .getMany();
+}
+
+
   async update(id: number, updateJobDto: UpdateJobDto): Promise<Job> {
     const job = await this.findOne(id);
     Object.assign(job, updateJobDto);

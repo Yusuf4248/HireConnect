@@ -1,17 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Chat } from './chat.model';
+import { Chat } from './entities/chat.entity';
 import { Repository } from 'typeorm';
+import { CreateChatDto } from './dto/create-chat.dto';
+import { UpdateChatDto } from './dto/update-chat.dto';
 
 @Injectable()
 export class ChatsService {
   constructor(
     @InjectRepository(Chat)
     private chatRepository: Repository<Chat>,
-  ) {}
+  ) { }
 
-  async create(data: Partial<Chat>): Promise<Chat> {
-    const chat = this.chatRepository.create(data);
+  async create(data: Partial<CreateChatDto>) {
+    const chat = this.chatRepository.create(data as any);
     return this.chatRepository.save(chat);
   }
 
@@ -20,24 +22,24 @@ export class ChatsService {
   }
 
   async findOne(id: number): Promise<Chat> {
-    
+
     const chat = await this.chatRepository.findOne({
       where: { id },
       relations: ['messages'],
     });
     if (!chat) throw new NotFoundException('Chat not found');
-    console.log("chats :::",chat);
-    
+    console.log("chats :::", chat);
+
     return chat;
   }
 
-  async update(id: number, data: Partial<Chat>) {
+  async update(id: number, data: Partial<UpdateChatDto>) {
     console.log('start service');
-    
-    const chat = await this.findOne(id);
-      console.log("chats :::",chat);
 
-    const res =await this.chatRepository.update({ id }, data);
+    const chat = await this.findOne(id);
+    console.log("chats :::", chat);
+
+    const res = await this.chatRepository.update({ id }, data as any);
     return await this.chatRepository.findOneBy({ id });
   }
 

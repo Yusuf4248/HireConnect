@@ -1,3 +1,4 @@
+
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
@@ -77,3 +78,5 @@ export class CreateAdminDto {
   @IsOptional()
   is_creator?: boolean;
 }
+
+

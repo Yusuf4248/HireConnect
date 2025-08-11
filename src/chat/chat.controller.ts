@@ -1,34 +1,56 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
 import { ChatsService } from './chat.service';
-import { Chat } from './chat.model';
+import { Chat } from './entities/chat.entity';
+import { CreateChatDto } from './dto/create-chat.dto';
+import { UpdateChatDto } from './dto/update-chat.dto';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
+@ApiTags('chats') // Groups all endpoints under 'chats' in Swagger UI
 @Controller('chats')
 export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
 
   @Post()
-  create(@Body() data: Partial<Chat>) {
+  @ApiOperation({ summary: 'Create a new chat' })
+  @ApiBody({ type: CreateChatDto })
+  @ApiResponse({ status: 201, description: 'Chat created successfully', type: Chat })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  create(@Body() data: Partial<CreateChatDto>) {
     return this.chatsService.create(data);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all chats' })
+  @ApiResponse({ status: 200, description: 'List of all chats', type: [Chat] })
   findAll() {
     return this.chatsService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a chat by ID' })
+  @ApiParam({ name: 'id', description: 'Chat ID', type: String })
+  @ApiResponse({ status: 200, description: 'Chat found', type: Chat })
+  @ApiResponse({ status: 404, description: 'Chat not found' })
   findOne(@Param('id') id: string) {
     return this.chatsService.findOne(Number(id));
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() data: Partial<Chat>) {
+  @ApiOperation({ summary: 'Update a chat by ID' })
+  @ApiParam({ name: 'id', description: 'Chat ID', type: Number })
+  @ApiBody({ type: UpdateChatDto })
+  @ApiResponse({ status: 200, description: 'Chat updated successfully', type: Chat })
+  @ApiResponse({ status: 404, description: 'Chat not found' })
+  update(@Param('id') id: number, @Body() data: Partial<UpdateChatDto>) {
     console.log('controller');
-    
     return this.chatsService.update(Number(id), data);
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a chat by ID' })
+  @ApiParam({ name: 'id', description: 'Chat ID', type: String })
+  @ApiResponse({ status: 200, description: 'Chat deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Chat not found' })
   remove(@Param('id') id: string) {
     return this.chatsService.remove(id);
   }
