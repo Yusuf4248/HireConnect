@@ -1,18 +1,34 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateJobSeekerDto } from "./dto/create-job_seeker.dto";
-import { UpdateJobSeekerDto } from "./dto/update-job_seeker.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { JobSeeker } from "./entities/job_seeker.entity";
-import { Repository } from "typeorm";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { CreateJobSeekerDto } from './dto/create-job_seeker.dto';
+import { UpdateJobSeekerDto } from './dto/update-job_seeker.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { JobSeeker } from './entities/job_seeker.entity';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class JobSeekersService {
   constructor(
     @InjectRepository(JobSeeker)
-    private readonly jobSeeker: Repository<JobSeeker>
+    private readonly jobSeeker: Repository<JobSeeker>,
   ) {}
-  create(createJobSeekerDto: CreateJobSeekerDto) {
-    return this.jobSeeker.save(createJobSeekerDto);
+
+  async create(createJobSeekerDto: CreateJobSeekerDto) {
+    const hashedPassword = await bcrypt.hash(
+      createJobSeekerDto.password_hash,
+      7,
+    );
+
+    const user = this.jobSeeker.create({
+      ...createJobSeekerDto,
+      password_hash: hashedPassword,
+    });
+
+    return this.jobSeeker.save(user);
   }
 
   findAll() {
@@ -32,7 +48,7 @@ export class JobSeekersService {
 
   async update(
     id: number,
-    updateJobSeekerDto: UpdateJobSeekerDto
+    updateJobSeekerDto: UpdateJobSeekerDto,
   ): Promise<JobSeeker> {
     try {
       // Check if job seeker exists
@@ -47,7 +63,7 @@ export class JobSeekersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException("Failed to update job seeker");
+      throw new BadRequestException('Failed to update job seeker');
     }
   }
 

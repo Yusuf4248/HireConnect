@@ -11,16 +11,29 @@ import {
   Min,
   Max,
   IsPhoneNumber,
+  IsEmail,
+  IsBoolean,
 } from "class-validator";
 import { Type } from "class-transformer";
 
 export class CreateJobSeekerDto {
   @ApiProperty({
-    example: "123e4567-e89b-12d3-a456-426614174000",
-    description: "Associated user ID (UUID)",
-  })
-  @IsString()
-  user_id: string;
+      example: "user@example.com",
+      description: "User email address",
+    })
+    @IsEmail({}, { message: "Invalid email format" })
+    @Length(5, 255, { message: "Email must be between 5 and 255 characters" })
+    email: string;
+  
+    @ApiProperty({
+      example: "securePassword123",
+      description: "User password (will be hashed)",
+      minLength: 8,
+      maxLength: 255,
+    })
+    @IsString({ message: "Password must be a string" })
+    @Length(8, 255, { message: "Password must be between 8 and 255 characters" })
+    password_hash: string;
 
   @ApiProperty({
     example: "John",
@@ -134,4 +147,13 @@ export class CreateJobSeekerDto {
   @IsOptional()
   @IsEnum(["active", "inactive"])
   status?: string;
+
+  @ApiPropertyOptional({
+      example: true,
+      description: "Is user active",
+      default: true,
+    })
+    @IsOptional()
+    @IsBoolean({ message: "is_active must be a boolean value" })
+    is_active?: boolean;
 }
