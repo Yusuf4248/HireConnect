@@ -5,6 +5,11 @@ import { UsersModule } from './users/users.module';
 import { JobSeekersModule } from './job_seekers/job_seekers.module';
 import { HrSpecialistsModule } from './hr_specialists/hr_specialists.module';
 import { WorkExperienceModule } from './work_experience/work_experience.module';
+import { SkillsModule } from './skills/skills.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { EducationModule } from './education/education.module';
+import { JobApplicationsModule } from './job-applications/job-applications.module';
+
 
 @Module({
   imports: [
@@ -25,6 +30,10 @@ import { WorkExperienceModule } from './work_experience/work_experience.module';
     JobSeekersModule,
     HrSpecialistsModule,
     WorkExperienceModule,
+    SkillsModule,
+    ContactsModule,
+    EducationModule,
+    JobApplicationsModule,
   ],
   controllers: [],
   providers: [],
