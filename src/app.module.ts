@@ -18,6 +18,7 @@ import { MessagesModule } from "./messages/messages.module";
 import { CompaniesModule } from "./companies/companies.module";
 import { AdminModule } from "./admin/admin.module";
 import { ResumeModule } from "./resume/resume.module";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { ResumeModule } from "./resume/resume.module";
     ContactsModule,
     EducationModule,
     JobApplicationsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

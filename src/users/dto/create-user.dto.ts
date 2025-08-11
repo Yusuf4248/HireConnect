@@ -49,13 +49,6 @@ export class CreateUserDto {
   @IsBoolean({ message: "is_active must be a boolean value" })
   is_active?: boolean;
 
-  @ApiPropertyOptional({
-    example: false,
-    description: "Is user verified",
-    default: false,
-  })
-  @IsOptional()
-  @IsBoolean({ message: "is_verified must be a boolean value" })
-  is_verified?: boolean;
+
 }
 
