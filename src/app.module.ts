@@ -21,7 +21,7 @@ import { ResumeModule } from "./resume/resume.module";
 import { AuthModule } from './auth/auth.module';
 import { WinstonModule } from "nest-winston";
 import { winstonConfig } from "./common/logger/winston.logger";
-
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -38,6 +38,10 @@ import { winstonConfig } from "./common/logger/winston.logger";
       synchronize: true,
       autoLoadEntities: true,
       dropSchema: false
+    }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY,
+      signOptions: { expiresIn: '15m' },
     }),
     JobSkillsModule,
     ChatsModule,
