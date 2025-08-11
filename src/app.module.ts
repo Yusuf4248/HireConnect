@@ -19,6 +19,7 @@ import { CompaniesModule } from "./companies/companies.module";
 import { AdminModule } from "./admin/admin.module";
 import { ResumeModule } from "./resume/resume.module";
 import { AuthModule } from './auth/auth.module';
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -34,6 +35,10 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true,
       autoLoadEntities: true,
       dropSchema: false
+    }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY,
+      signOptions: { expiresIn: '15m' },
     }),
     JobSkillsModule,
     ChatsModule,
