@@ -19,11 +19,11 @@ import { CompaniesModule } from "./companies/companies.module";
 import { AdminModule } from "./admin/admin.module";
 import { ResumeModule } from "./resume/resume.module";
 import { AuthModule } from './auth/auth.module';
-import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
+    WinstonModule.forRoot(winstonConfig),
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.PG_HOST,
