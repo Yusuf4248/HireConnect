@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { JobSeeker } from "../../job_seekers/entities/job_seeker.entity";
 import { HrSpecialist } from "../../hr_specialists/entities/hr_specialist.entity";
+import { JobApplication } from "src/job-applications/entities/job-application.entity";
 
 @Entity("users")
 export class User {
@@ -19,8 +20,7 @@ export class User {
   @Column({ type: "boolean", default: true })
   is_active: boolean;
 
-  @Column({ type: "boolean", default: false })
-  is_verified: boolean;
+ 
 
   @Column({ type: "varchar", length: 255, nullable: true })
   refresh_token: string;
@@ -37,6 +37,6 @@ export class User {
   @OneToMany(() => HrSpecialist, (hrSpecialist) => hrSpecialist.user)
   hrSpecialists: HrSpecialist[];
 
-//   @OneToMany(() => JobApplication, (jobApplication) => jobApplication.jobSeeker)
-//   jobApplications: JobApplication[];
+  // @OneToMany(() => JobApplication, (jobApplication) => jobApplication.jobSeeker )
+  // jobApplications: JobApplication[];
 }

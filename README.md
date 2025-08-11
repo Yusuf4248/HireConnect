@@ -43,7 +43,11 @@
 | Layer        | Tech Stack                     |
 |--------------|--------------------------------|
 | Backend      | NestJS, TypeScript             |
+
+| Database     | PostgreSQL, Sequelize ORM      |
+
 | Database     | PostgreSQL, TypeOrm ORM      |
+
 | Auth         | JWT, bcrypt                    |
 | API Format   | RESTful                        |
 | Dev Tools    | ESLint, Prettier, Husky (optional) |
