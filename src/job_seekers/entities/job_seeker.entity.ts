@@ -8,52 +8,55 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { User } from "../../users/entities/user.entity";
+
 import { WorkExperience } from "../../work_experience/entities/work_experience.entity";
 
-@Entity("job_seekers")
+@Entity('job_seekers')
 export class JobSeeker {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  user_id: string;
+  @Column({ type: 'varchar', length: 255 })
+  email: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 255 })
+  password_hash: string;
+
+  @Column({ type: 'varchar', length: 100 })
   first_name: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   last_name: string;
 
-  @Column({ type: "varchar", length: 15, nullable: true })
+  @Column({ type: 'varchar', length: 15, nullable: true })
   phone: string;
 
-  @Column({ type: "date", nullable: true })
+  @Column({ type: 'date', nullable: true })
   date_of_birth: Date;
 
-  @Column({ type: "enum", enum: ["male", "female", "other"], nullable: true })
+  @Column({ type: 'enum', enum: ['male', 'female', 'other'], nullable: true })
   gender: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   location: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: 'text', nullable: true })
   bio: string;
 
-  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   expected_salary: number;
 
-  @Column({ type: "varchar", length: 10, nullable: true })
+  @Column({ type: 'varchar', length: 10, nullable: true })
   currency: string;
 
   @Column({
-    type: "enum",
-    enum: ["remote", "office", "hybrid"],
+    type: 'enum',
+    enum: ['remote', 'office', 'hybrid'],
     nullable: true,
   })
   work_type_preference: string;
 
-  @Column({ type: "varchar", length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   preferred_job_title: string;
 
   @CreateDateColumn()
@@ -65,12 +68,15 @@ export class JobSeeker {
   @Column({ nullable: true })
   contact_id: string;
 
-  @Column({ type: "enum", enum: ["active", "inactive"], default: "active" })
+  @Column({ type: 'enum', enum: ['active', 'inactive'], default: 'active' })
   status: string;
 
-  @ManyToOne(() => User, (user) => user.jobSeekers)
-  @JoinColumn({ name: "user_id" })
-  user: User;
+  @Column({ type: 'boolean', default: true })
+  is_active: boolean;
+
+  // @ManyToOne(() => User, (user) => user.jobSeekers)
+  // @JoinColumn({ name: 'user_id' })
+  // user: User;
 
   //   @OneToMany(() => Resume, (resume) => resume.jobSeeker)
   //   resumes: Resume[];

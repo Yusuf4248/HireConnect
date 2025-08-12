@@ -1,33 +1,36 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "../../users/entities/user.entity";
 
-@Entity("hr_specialists")
+
+@Entity('hr_specialists')
 export class HrSpecialist {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  user_id: number;
+  @Column({ type: 'varchar', length: 255 })
+  email: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  password_hash: string;
 
   @Column()
   company_id: number;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   first_name: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   last_name: string;
 
-  @Column({ type: "varchar", length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   position: string;
 
-  @Column({ type: "varchar", length: 15, nullable: true })
+  @Column({ type: 'varchar', length: 15, nullable: true })
   phone: string;
 
-  @Column({ type: "varchar", length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   department: string;
 
-  @Column({ type: "boolean", default: false })
+  @Column({ type: 'boolean', default: false })
   is_company_admin: boolean;
 
   @CreateDateColumn()
@@ -36,14 +39,13 @@ export class HrSpecialist {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.hrSpecialists)
-  @JoinColumn({ name: "user_id" })
-  user: User;
+  @Column({ type: 'boolean', default: true })
+  is_active: boolean;
 
-//   @ManyToOne(() => Company, (company) => company.hrSpecialists)
-//   @JoinColumn({ name: "company_id" })
-//   company: Company;
+  //   @ManyToOne(() => Company, (company) => company.hrSpecialists)
+  //   @JoinColumn({ name: "company_id" })
+  //   company: Company;
 
-//   @OneToMany(() => Job, (job) => job.hrSpecialist)
-//   jobs: Job[];
+  //   @OneToMany(() => Job, (job) => job.hrSpecialist)
+  //   jobs: Job[];
 }
