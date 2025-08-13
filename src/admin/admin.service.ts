@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Admin } from './entities/admin.entity'; 
+import { Admin } from './entities/admin.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -10,37 +10,42 @@ import * as bcrypt from 'bcrypt';
 export class AdminService {
   constructor(
     @InjectRepository(Admin)
-    private companyRepository: Repository<Admin>,
+    private adminRepository: Repository<Admin>,
   ) {}
 
   async create(createAdminDto: CreateAdminDto) {
-    const hashedPassword = await bcrypt.hash(
-          createAdminDto.password_hash,
-          7,
-        );
-    
-        const user = this.companyRepository.create({
-          ...createAdminDto,
-          password_hash: hashedPassword,
-        });
-    
-        return this.companyRepository.save(user);
+    const hashedPassword = await bcrypt.hash(createAdminDto.password_hash, 7);
+
+    const user = this.adminRepository.create({
+      ...createAdminDto,
+      password_hash: hashedPassword,
+    });
+
+    return this.adminRepository.save(user);
   }
 
   findAll() {
-    return this.companyRepository.find();
+    return this.adminRepository.find();
   }
 
   findOne(id: number) {
-    return this.companyRepository.findOne({ where: { id } });
+    return this.adminRepository.findOne({ where: { id } });
   }
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
-    await this.companyRepository.update(id, updateAdminDto);
+    await this.adminRepository.update(id, updateAdminDto);
     return this.findOne(id);
   }
 
   remove(id: number) {
-    return this.companyRepository.delete(id);
+    return this.adminRepository.delete(id);
+  }
+
+  async findByEmail(email: string) {
+    return this.adminRepository.findOneBy({ email });
+  }
+
+  async updateTokenHash(id: number, hash: string) {
+    await this.adminRepository.update(id, { refresh_token: hash });
   }
 }

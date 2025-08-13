@@ -8,6 +8,8 @@ export class CreateJobSeekerSkillDto {
   @IsNumber()
   skillId: number;
 
+
+
   @IsOptional()
   @IsEnum(ProficiencyLevel)
   proficiencyLevel?: ProficiencyLevel;

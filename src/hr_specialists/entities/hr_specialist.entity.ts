@@ -1,5 +1,12 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('hr_specialists')
 export class HrSpecialist {
@@ -41,6 +48,9 @@ export class HrSpecialist {
 
   @Column({ type: 'boolean', default: true })
   is_active: boolean;
+
+  @Column({ type: 'varchar', nullable: true })
+  refresh_token: string;
 
   //   @ManyToOne(() => Company, (company) => company.hrSpecialists)
   //   @JoinColumn({ name: "company_id" })
