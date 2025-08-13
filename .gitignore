@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-
+/src/public
 # Logs
 logs
 *.log
