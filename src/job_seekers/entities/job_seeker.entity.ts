@@ -7,9 +7,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
-import { WorkExperience } from "../../work_experience/entities/work_experience.entity";
+import { WorkExperience } from '../../work_experience/entities/work_experience.entity';
 
 @Entity('job_seekers')
 export class JobSeeker {
@@ -73,6 +73,9 @@ export class JobSeeker {
 
   @Column({ type: 'boolean', default: true })
   is_active: boolean;
+
+  @Column({ type: 'varchar', nullable: true })
+  refersh_token: string;
 
   // @ManyToOne(() => User, (user) => user.jobSeekers)
   // @JoinColumn({ name: 'user_id' })

@@ -1,29 +1,33 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateHrSpecialistDto } from "./dto/create-hr_specialist.dto";
-import { UpdateHrSpecialistDto } from "./dto/update-hr_specialist.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { HrSpecialist } from "./entities/hr_specialist.entity";
-import { Repository } from "typeorm";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { CreateHrSpecialistDto } from './dto/create-hr_specialist.dto';
+import { UpdateHrSpecialistDto } from './dto/update-hr_specialist.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { HrSpecialist } from './entities/hr_specialist.entity';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class HrSpecialistsService {
   constructor(
     @InjectRepository(HrSpecialist)
-    private readonly hrSpecRepo: Repository<HrSpecialist>
+    private readonly hrSpecRepo: Repository<HrSpecialist>,
   ) {}
   async create(createHrSpecialistDto: CreateHrSpecialistDto) {
-   const hashedPassword = await bcrypt.hash(
-     createHrSpecialistDto.password_hash,
-     7,
-   );
-   
-       const user = this.hrSpecRepo.create({
-         ...createHrSpecialistDto,
-         password_hash: hashedPassword,
-       });
-   
-       return this.hrSpecRepo.save(user);
+    const hashedPassword = await bcrypt.hash(
+      createHrSpecialistDto.password_hash,
+      7,
+    );
+
+    const user = this.hrSpecRepo.create({
+      ...createHrSpecialistDto,
+      password_hash: hashedPassword,
+    });
+
+    return this.hrSpecRepo.save(user);
   }
 
   findAll() {
@@ -42,28 +46,36 @@ export class HrSpecialistsService {
   }
 
   async update(id: number, updateHrSpecialistDto: UpdateHrSpecialistDto) {
-   try {
-         // Check if job seeker exists
-         const existingJobSeeker = await this.findOne(id);
-   
-         // Update the job seeker
-         await this.hrSpecRepo.update(id, updateHrSpecialistDto);
-   
-         // Return updated job seeker
-         return await this.findOne(id);
-       } catch (error) {
-         if (error instanceof NotFoundException) {
-           throw error;
-         }
-         throw new BadRequestException("Failed to update job seeker");
-       }
+    try {
+      // Check if job seeker exists
+      const existingJobSeeker = await this.findOne(id);
+
+      // Update the job seeker
+      await this.hrSpecRepo.update(id, updateHrSpecialistDto);
+
+      // Return updated job seeker
+      return await this.findOne(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to update job seeker');
+    }
   }
 
   async remove(id: number) {
-   const result = await this.hrSpecRepo.delete(id);
+    const result = await this.hrSpecRepo.delete(id);
 
-   if (result.affected === 0) {
-     throw new NotFoundException(`User with ID ${id} not found`);
-   }
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+  }
+
+  async findByEmail(email: string) {
+    return this.hrSpecRepo.findOneBy({ email });
+  }
+
+  async updateTokenHash(id: number, hash: string) {
+    await this.hrSpecRepo.update(id, { refresh_token: hash });
   }
 }

@@ -74,4 +74,12 @@ export class JobSeekersService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
   }
+
+  async updateTokenHash(id: number, hash: string) {
+    await this.jobSeeker.update(id, { refersh_token: hash });
+  }
+
+  async findByEmail(email: string) {
+    return this.jobSeeker.findOneBy({ email });
+  }
 }
