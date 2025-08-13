@@ -17,6 +17,15 @@ export class CreateJobApplicationDto {
   @IsNotEmpty()
   job_seeker_id: number;
 
+
+  @ApiProperty({
+    description: "ID of the job seeker who is applying.",
+    example: 42,
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  job_id: number;
+
   @ApiProperty({
     description: "ID of the resume to be submitted with the application.",
     example: 101,
