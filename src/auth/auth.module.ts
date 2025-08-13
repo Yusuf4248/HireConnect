@@ -1,3 +1,4 @@
+
 import { Module } from '@nestjs/common';
 import { AdminModule } from '../admin/admin.module';
 import { JobSeekersModule } from '../job_seekers/job_seekers.module';
@@ -16,3 +17,4 @@ import { JobSeekerAuthService } from './job_seeker/job-seeker.auth.service';
   providers: [AdminAuthService, HrAuthService, JobSeekerAuthService],
 })
 export class AuthModule {}
+

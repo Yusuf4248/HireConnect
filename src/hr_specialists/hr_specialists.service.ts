@@ -70,12 +70,4 @@ export class HrSpecialistsService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
   }
-
-  async findByEmail(email: string) {
-    return this.hrSpecRepo.findOneBy({ email });
-  }
-
-  async updateTokenHash(id: number, hash: string) {
-    await this.hrSpecRepo.update(id, { refresh_token: hash });
-  }
 }
