@@ -21,6 +21,7 @@ export class HrSpecialistsService {
       createHrSpecialistDto.password_hash,
       7,
     );
+
     const user = this.hrSpecRepo.create({
       ...createHrSpecialistDto,
       password_hash: hashedPassword,
