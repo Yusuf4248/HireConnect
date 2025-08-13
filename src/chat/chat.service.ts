@@ -12,7 +12,7 @@ export class ChatsService {
     private chatRepository: Repository<Chat>,
   ) { }
 
-  async create(data: Partial<CreateChatDto>) {
+  async create(data: CreateChatDto) {
     const chat = this.chatRepository.create(data as any);
     return this.chatRepository.save(chat);
   }

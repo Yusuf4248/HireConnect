@@ -5,7 +5,7 @@ import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
-@ApiTags('chats') // Groups all endpoints under 'chats' in Swagger UI
+@ApiTags('chats')
 @Controller('chats')
 export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
@@ -15,7 +15,7 @@ export class ChatsController {
   @ApiBody({ type: CreateChatDto })
   @ApiResponse({ status: 201, description: 'Chat created successfully', type: Chat })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
-  create(@Body() data: Partial<CreateChatDto>) {
+  create(@Body() data: CreateChatDto) {
     return this.chatsService.create(data);
   }
 
