@@ -9,11 +9,27 @@ import {
 } from '@nestjs/swagger';
 import { LoginAuthDto } from '../dto/login-auth.dto';
 import { JobSeekerAuthService } from './job-seeker.auth.service';
+import { CreateJobSeekerDto } from '../../job_seekers/dto/create-job_seeker.dto';
 
 @ApiTags('JobSeekerAuth')
 @Controller('job-seeker-auth')
 export class JobSeekerAuthController {
   constructor(private readonly jobSeekerAuthService: JobSeekerAuthService) {}
+
+  @Post('register')
+  @ApiOperation({ summary: 'Register a new HR specialist' })
+  @ApiResponse({
+    status: 201,
+    description: 'Job seeker registered successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation failed or job seeker already exists',
+  })
+  @ApiBody({ type: CreateJobSeekerDto })
+  async register(@Body() createJobSeekerDto: CreateJobSeekerDto) {
+    return this.jobSeekerAuthService.register(createJobSeekerDto);
+  }
 
   @Post('log-in')
   @ApiOperation({

@@ -9,6 +9,7 @@ import { LoginAuthDto } from '../dto/login-auth.dto';
 import * as bcrypt from 'bcrypt';
 import { JobSeekersService } from '../../job_seekers/job_seekers.service';
 import { JobSeeker } from '../../job_seekers/entities/job_seeker.entity';
+import { CreateJobSeekerDto } from '../../job_seekers/dto/create-job_seeker.dto';
 
 @Injectable()
 export class JobSeekerAuthService {
@@ -38,6 +39,21 @@ export class JobSeekerAuthService {
     return {
       accessToken,
       refreshToken,
+    };
+  }
+
+  async register(createJobSeekerDto: CreateJobSeekerDto) {
+    const candidate = await this.jobSeekerService.findByEmail(
+      createJobSeekerDto.email,
+    );
+    if (candidate) {
+      throw new BadRequestException(
+        'job seeker with this email already exists',
+      );
+    }
+    const lid = await this.jobSeekerService.create(createJobSeekerDto);
+    return {
+      lid,
     };
   }
 
