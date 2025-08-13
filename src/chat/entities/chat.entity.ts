@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
-import { Message } from '../../messages/messages.model';
 import { JobApplication } from '../../job-applications/entities/job-application.entity';
+import { Message } from '../../messages/entities/messages.entity';
 
 @Entity('chats')
 export class Chat {

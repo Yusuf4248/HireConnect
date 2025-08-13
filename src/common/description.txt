@@ -4,6 +4,4 @@ _______________________________________________________________________________!
 
 bu kod messages table modeldan entityga o'zgarganda qo'shib qo'yiladi relation!
 
-@ManyToOne(() => Chat, (chat) => chat.messages)
-@JoinColumn({ name: 'chat_id' })
-chat: Chat;
+
