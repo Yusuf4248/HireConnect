@@ -12,7 +12,7 @@ async function start() {
     const PORT = process.env.PORT || 3030;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.use(cookieParser());
-    app.useStaticAssets(join(__dirname, '..', 'src', 'public'), {
+    app.useStaticAssets(join(__dirname,  'public'), {
     prefix: '/public/',
   });
     app.useGlobalPipes(new ValidationPipe());
