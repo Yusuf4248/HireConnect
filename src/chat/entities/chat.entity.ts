@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { Message } from '../../messages/messages.model';
+import { JobApplication } from '../../job-applications/entities/job-application.entity';
 
 @Entity('chats')
 export class Chat {
@@ -45,6 +46,12 @@ export class Chat {
     description: 'List of messages associated with the chat',
     type: () => [Message],
   })
+
+  // RELATION
+  @OneToOne(() => JobApplication, (app) => app.chat)
+  @JoinColumn({ name: 'job_application_id' })
+  job_application: JobApplication;
+
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
 }

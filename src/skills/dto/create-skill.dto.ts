@@ -31,11 +31,12 @@ export class CreateSkillDto {
   @IsNotEmpty({ message: "Category is required" })
   category: SkillCategoryEnums;
 
-  // @ApiProperty({
-  //   example: true,
-  //   description: "Indicates whether the skill is active or not",
-  //   required: false,
-  // })
+  @ApiProperty({
+    example: true,
+    description: "Indicates whether the skill is active or not",
+    required: false,
+  })
+  
   @IsOptional()
   @IsBoolean({ message: "is_active must be a boolean" })
   is_active?: boolean;
