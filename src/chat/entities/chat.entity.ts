@@ -1,23 +1,50 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Message } from '../../messages/messages.model';
 
 @Entity('chats')
 export class Chat {
+  @ApiProperty({
+    example: 1,
+    description: 'Unique identifier for the chat',
+  })
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
+  @ApiProperty({
+    example: 101,
+    description: 'ID of the related job application',
+  })
   @Column({ type: 'bigint' })
   application_id: number;
 
+  @ApiProperty({
+    example: 5,
+    description: 'ID of the HR specialist',
+  })
   @Column({ type: 'bigint' })
   hr_id: number;
 
+  @ApiProperty({
+    example: 12,
+    description: 'ID of the job seeker',
+  })
   @Column({ type: 'bigint' })
   job_seeker_id: number;
 
+  @ApiProperty({
+    example: 'active',
+    description: 'Status of the chat (e.g., active, closed)',
+    required: false,
+    nullable: true,
+  })
   @Column({ type: 'varchar', nullable: true })
   status: string;
 
+  @ApiProperty({
+    description: 'List of messages associated with the chat',
+    type: () => [Message],
+  })
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
 }

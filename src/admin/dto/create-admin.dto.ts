@@ -1,4 +1,3 @@
-
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
@@ -57,26 +56,4 @@ export class CreateAdminDto {
       'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
   })
   password_hash: string;
-
-  @ApiProperty({
-    example: true,
-    description: 'Is admin active',
-    required: false,
-    default: true,
-  })
-  @IsBoolean()
-  @IsOptional()
-  is_active?: boolean;
-
-  @ApiProperty({
-    example: false,
-    description: 'Is admin creator',
-    required: false,
-    default: false,
-  })
-  @IsBoolean()
-  @IsOptional()
-  is_creator?: boolean;
 }
-
-
