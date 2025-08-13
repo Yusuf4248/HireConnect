@@ -9,11 +9,27 @@ import {
 } from '@nestjs/swagger';
 import { LoginAuthDto } from '../dto/login-auth.dto';
 import { HrAuthService } from './hr.auth.service';
+import { CreateHrSpecialistDto } from '../../hr_specialists/dto/create-hr_specialist.dto';
 
 @ApiTags('HrAuth')
 @Controller('hr-auth')
 export class HrAuthController {
   constructor(private readonly hrAuthService: HrAuthService) {}
+
+  @Post('register')
+  @ApiOperation({ summary: 'Register a new HR specialist' })
+  @ApiResponse({
+    status: 201,
+    description: 'HR specialist registered successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation failed or HR specialist already exists',
+  })
+  @ApiBody({ type: CreateHrSpecialistDto })
+  async register(@Body() createHrSpecialistDto: CreateHrSpecialistDto) {
+    return this.hrAuthService.register(createHrSpecialistDto);
+  }
 
   @Post('log-in')
   @ApiOperation({
