@@ -23,6 +23,8 @@ async function start() {
           "http://localhost:3333",
           "http://localhost:8000",
           "http://localhost:3004",
+          "http://localhost:5173",
+
 
         ];
         if (!origin || allowedOrigin.includes(origin)) {
