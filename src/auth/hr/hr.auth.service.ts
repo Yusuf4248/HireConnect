@@ -9,6 +9,7 @@ import { LoginAuthDto } from '../dto/login-auth.dto';
 import * as bcrypt from 'bcrypt';
 import { HrSpecialistsService } from '../../hr_specialists/hr_specialists.service';
 import { HrSpecialist } from '../../hr_specialists/entities/hr_specialist.entity';
+import { CreateHrSpecialistDto } from '../../hr_specialists/dto/create-hr_specialist.dto';
 
 @Injectable()
 export class HrAuthService {
@@ -38,6 +39,19 @@ export class HrAuthService {
     return {
       accessToken,
       refreshToken,
+    };
+  }
+
+  async register(createHrDto: CreateHrSpecialistDto) {
+    const candidate = await this.hrService.findByEmail(createHrDto.email);
+    if (candidate) {
+      throw new BadRequestException(
+        'Hr specialist with this email already exists',
+      );
+    }
+    const lid = await this.hrService.create(createHrDto);
+    return {
+      lid,
     };
   }
 
