@@ -13,7 +13,7 @@ import { JobSeeker } from '../../job_seekers/entities/job_seeker.entity';
 import { Skill } from '../../skills/entities/skill.entity';
 
 @Entity('job_seeker_skills')
-@Unique(['jobSeekerId', 'skillId'])
+// @Unique(['jobSeekerId', 'skillId'])
 export class JobSeekerSkill {
   @ApiProperty({
     example: 1,
