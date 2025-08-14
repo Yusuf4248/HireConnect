@@ -4,17 +4,21 @@ import { UpdateJobApplicationDto } from "./dto/update-job-application.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { JobApplication } from "./entities/job-application.entity";
 import { Repository } from "typeorm";
+import { ChatsService } from "src/chat/chat.service";
 
 @Injectable()
 export class JobApplicationsService {
   constructor(
     @InjectRepository(JobApplication)
-    private readonly jobApplicationRepo: Repository<JobApplication>
-  ) {}
+    private readonly jobApplicationRepo: Repository<JobApplication>,
+
+  private readonly chatsService: ChatsService
+  ) { }
   async create(createJobApplicationDto: CreateJobApplicationDto) {
     const newJobApplication = await this.jobApplicationRepo.save(
       createJobApplicationDto
     );
+    // const newChat = await this.chatsService.create()
 
     return {
       message: "New job application created successfully",

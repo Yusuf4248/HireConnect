@@ -59,7 +59,7 @@ export class HrSpecialistsController {
   }
 
   @Get(':id')
-  @Roles('admin')
+  @Roles('admin','hr')
   @ApiOperation({ summary: 'Get HR specialist by ID' })
   @ApiOkResponse({
     description: 'The HR specialist with the requested ID',

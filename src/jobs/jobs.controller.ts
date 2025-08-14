@@ -40,7 +40,7 @@ export class JobsController {
 
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('job_seeker', 'hr')
+  @Roles('jobSeeker', 'hr')
   @ApiOperation({ summary: 'Retrieve all job postings' })
   @ApiResponse({
     status: 200,

@@ -28,7 +28,7 @@ export class CreateJobDto {
   @IsOptional()
   @IsNumber()
   @IsPositive()
-  category_id?: number;
+  category_id: number;
 
   @ApiProperty({ example: "Senior Node.js Developer" })
   @IsString()

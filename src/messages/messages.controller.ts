@@ -15,7 +15,7 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Post()
-  @Roles('admin', 'hr')
+  @Roles('admin', 'hr','jobSeeker')
   @ApiOperation({ summary: 'Create a new message' })
   @ApiBody({ type: CreateCommentDto })
   @ApiResponse({
@@ -29,7 +29,7 @@ export class MessagesController {
   }
 
   @Get()
-  @Roles('admin', 'hr')
+  @Roles('admin', 'hr','jobSeeker')
   @ApiOperation({ summary: 'Get all messages' })
   @ApiResponse({
     status: 200,
@@ -41,7 +41,7 @@ export class MessagesController {
   }
 
   @Get(':id')
-  @Roles('admin', 'hr')
+  @Roles('admin', 'hr','jobSeeker')
   @ApiOperation({ summary: 'Get a message by ID' })
   @ApiParam({ name: 'id', description: 'Message ID', type: String })
   @ApiResponse({

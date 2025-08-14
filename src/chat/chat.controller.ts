@@ -17,7 +17,7 @@ export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
 
   @Post()
-  @Roles('job_seeker', 'hr')
+  @Roles('jobSeeker', 'hr')
   @ApiOperation({ summary: 'Create a new chat' })
   @ApiBody({ type: CreateChatDto })
   @ApiResponse({
@@ -31,7 +31,7 @@ export class ChatsController {
   }
 
   @Get()
-  @Roles('admin')
+  @Roles('admin','hr','jobSeeker')
   @ApiOperation({ summary: 'Get all chats' })
   @ApiResponse({ status: 200, description: 'List of all chats', type: [Chat] })
   findAll() {
@@ -39,7 +39,7 @@ export class ChatsController {
   }
 
   @Get(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('jobSeeker', 'hr')
   @ApiOperation({ summary: 'Get a chat by ID' })
   @ApiParam({ name: 'id', description: 'Chat ID', type: String })
   @ApiResponse({ status: 200, description: 'Chat found', type: Chat })

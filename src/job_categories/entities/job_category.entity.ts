@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Job } from 'src/jobs/entities/job.entity';
 import {
   Column,
   CreateDateColumn,
@@ -65,4 +66,7 @@ export class JobCategory {
   })
   @CreateDateColumn()
   created_at: Date;
+
+    @OneToMany(() => Job, (job) => job.company)
+    jobs: Job[];
 }

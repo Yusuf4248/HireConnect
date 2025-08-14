@@ -34,7 +34,7 @@ export class JobApplicationsController {
   ) {}
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('job_seeker')
+  @Roles('jobSeeker')
   @Post()
   @ApiOperation({ summary: 'Create a new job application' })
   @ApiResponse({

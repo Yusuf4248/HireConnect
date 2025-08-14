@@ -9,5 +9,6 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [TypeOrmModule.forFeature([Chat]), JwtModule],
   providers: [ChatsService],
   controllers: [ChatsController],
+  exports:[ChatsService]
 })
 export class ChatsModule { }

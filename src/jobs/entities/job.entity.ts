@@ -14,6 +14,7 @@ import { Company } from 'src/companies/entities/company.entity';
 import { JobApplication } from '../../job-applications/entities/job-application.entity';
 import { JobSkill } from '../../job_skills/entities/job_skill.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { JobCategory } from 'src/job_categories/entities/job_category.entity';
 
 @Entity('jobs')
 export class Job {
@@ -174,6 +175,10 @@ export class Job {
   @ManyToOne(() => Company, (company) => company.jobs)
   @JoinColumn({ name: 'company_id' })
   company: Company;
+
+  @ManyToOne(() => JobCategory, (company) => company.jobs)
+  @JoinColumn({ name: 'category_id' })
+  category: Company;
 
   @ManyToOne(() => HrSpecialist, (hr) => hr.jobs)
   @JoinColumn({ name: 'hr_specialist_id' })
