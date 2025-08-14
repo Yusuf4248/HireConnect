@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { JobApplicationStatuses } from "../../common/enums/job_application.enum";
+import { Job } from "src/jobs/entities/job.entity";
 
 @Entity("job-application")
 export class JobApplication {
@@ -19,6 +20,14 @@ export class JobApplication {
   })
   @Column()
   job_seeker_id: number;
+
+  @ApiProperty({
+    description: "Identifier of the job seeker who submitted the application.",
+    example: 42,
+    type: Number,
+  })
+  @Column()
+  job_id: number;
 
   @ApiProperty({
     description: "Identifier of the resume associated with this application.",
@@ -82,4 +91,9 @@ export class JobApplication {
   })
   @Column({ type: "text", nullable: true })
   notes: string;
+
+
+  @ManyToOne(() => Job)
+  @JoinColumn({ name: "job_id" })
+  job:Job
 }
