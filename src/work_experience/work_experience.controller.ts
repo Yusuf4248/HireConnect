@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { WorkExperienceService } from "./work_experience.service";
 import { CreateWorkExperienceDto } from "./dto/create-work_experience.dto";
@@ -18,81 +19,90 @@ import {
   ApiBody,
   ApiBearerAuth,
 } from "@nestjs/swagger";
+import { Roles } from "../common/decorators/roles-auth.decorator";
+import { AuthGuard } from "../common/guards/auth.guard";
+import { RolesGuard } from "../common/guards/roles.guard";
 
-@ApiTags("Work Experience") // Groups endpoints in Swagger UI
+@ApiTags('Work Experience')
 @ApiBearerAuth()
-@Controller("work-experience")
+@UseGuards(AuthGuard, RolesGuard)
+@Controller('work-experience')
 export class WorkExperienceController {
   constructor(private readonly workExperienceService: WorkExperienceService) {}
 
   @Post()
-  @ApiOperation({ summary: "Create work experience" })
+  @Roles('job_seeker')
+  @ApiOperation({ summary: 'Create work experience' })
   @ApiResponse({
     status: 201,
-    description: "The work experience has been successfully created.",
+    description: 'The work experience has been successfully created.',
   })
-  @ApiResponse({ status: 400, description: "Bad Request." })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
   @ApiBody({ type: CreateWorkExperienceDto })
   create(@Body() createWorkExperienceDto: CreateWorkExperienceDto) {
     return this.workExperienceService.create(createWorkExperienceDto);
   }
 
   @Get()
-  @ApiOperation({ summary: "Get all work experiences" })
-  @ApiResponse({ status: 200, description: "Return all work experiences." })
+  @Roles('job_seeker', 'hr')
+  @ApiOperation({ summary: 'Get all work experiences' })
+  @ApiResponse({ status: 200, description: 'Return all work experiences.' })
   findAll() {
     return this.workExperienceService.findAll();
   }
 
-  @Get(":id")
-  @ApiOperation({ summary: "Get work experience by ID" })
+  @Get(':id')
+  @Roles('job_seeker', 'hr')
+  @ApiOperation({ summary: 'Get work experience by ID' })
   @ApiResponse({
     status: 200,
-    description: "Return the work experience with the specified ID.",
+    description: 'Return the work experience with the specified ID.',
   })
-  @ApiResponse({ status: 404, description: "Work experience not found." })
+  @ApiResponse({ status: 404, description: 'Work experience not found.' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the work experience",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the work experience',
   })
-  findOne(@Param("id") id: string) {
+  findOne(@Param('id') id: string) {
     return this.workExperienceService.findOne(+id);
   }
 
-  @Patch(":id")
-  @ApiOperation({ summary: "Update work experience" })
+  @Patch(':id')
+  @Roles('job_seeker')
+  @ApiOperation({ summary: 'Update work experience' })
   @ApiResponse({
     status: 200,
-    description: "The work experience has been successfully updated.",
+    description: 'The work experience has been successfully updated.',
   })
-  @ApiResponse({ status: 404, description: "Work experience not found." })
+  @ApiResponse({ status: 404, description: 'Work experience not found.' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the work experience to update",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the work experience to update',
   })
   @ApiBody({ type: UpdateWorkExperienceDto })
   update(
-    @Param("id") id: string,
-    @Body() updateWorkExperienceDto: UpdateWorkExperienceDto
+    @Param('id') id: string,
+    @Body() updateWorkExperienceDto: UpdateWorkExperienceDto,
   ) {
     return this.workExperienceService.update(+id, updateWorkExperienceDto);
   }
 
-  @Delete(":id")
-  @ApiOperation({ summary: "Delete work experience" })
+  @Delete(':id')
+  @Roles('job_seeker')
+  @ApiOperation({ summary: 'Delete work experience' })
   @ApiResponse({
     status: 200,
-    description: "The work experience has been successfully deleted.",
+    description: 'The work experience has been successfully deleted.',
   })
-  @ApiResponse({ status: 404, description: "Work experience not found." })
+  @ApiResponse({ status: 404, description: 'Work experience not found.' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the work experience to delete",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the work experience to delete',
   })
-  remove(@Param("id") id: string) {
+  remove(@Param('id') id: string) {
     return this.workExperienceService.remove(+id);
   }
 }

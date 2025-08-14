@@ -21,7 +21,7 @@ export class SelfAdminGuard implements CanActivate {
       req.user.id !== paramId
     ) {
       throw new ForbiddenException({
-        message: "Faqat o‘z profilingizga yoki admin ruxsatiga kirish mumkin",
+        message: "Faqat o'z profilingizga yoki admin ruxsatiga kirish mumkin",
       });
     }
 

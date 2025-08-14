@@ -42,7 +42,7 @@ export class RolesGuard implements CanActivate {
 
     if (!hasPermission) {
       throw new ForbiddenException({
-        message: "Sizda bu amalni bajarishga ruxsat yo‘q",
+        message: "Sizda bu amalni bajarishga ruxsat yo'q",
       });
     }
 
