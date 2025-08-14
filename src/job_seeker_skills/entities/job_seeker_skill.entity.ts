@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  CreateDateColumn,
   Unique,
   JoinColumn,
 } from 'typeorm';
@@ -13,7 +12,7 @@ import { JobSeeker } from '../../job_seekers/entities/job_seeker.entity';
 import { Skill } from '../../skills/entities/skill.entity';
 
 @Entity('job_seeker_skills')
-// @Unique(['jobSeekerId', 'skillId'])
+@Unique(['job_seeker_id', 'skill_id'])
 export class JobSeekerSkill {
   @ApiProperty({
     example: 1,

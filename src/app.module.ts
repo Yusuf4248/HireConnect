@@ -40,6 +40,7 @@ import { MailModule } from './mail/mail.module';
       dropSchema: true,
     }),
     JwtModule.register({
+      global: true,
       secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: '15m' },
     }),

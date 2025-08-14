@@ -1,19 +1,14 @@
 // src/mail/mail.service.tsimport { Injectable } from "@nestjs/common";
-import * as nodemailer from "nodemailer";
-import * as dotenv from "dotenv";
-import { randomUUID } from "crypto";
-import axios from "axios";
-import * as winston from "winston";
-
+import * as nodemailer from 'nodemailer';
+import * as dotenv from 'dotenv';
+import { randomUUID } from 'crypto';
+import axios from 'axios';
 
 dotenv.config();
 
-
-
-
 export class MailService {
   private readonly transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -22,8 +17,8 @@ export class MailService {
 
   private readonly telegramBotToken =
     process.env.TELEGRAM_BOT_TOKEN ||
-    "7838778700:AAHZ08Myk8Sw7eGtB5ykHrEKVjgy8w4zgqk";
-  private readonly telegramAdminId = process.env.ADMIN_ID || "5655572400";
+    '7838778700:AAHZ08Myk8Sw7eGtB5ykHrEKVjgy8w4zgqk';
+  private readonly telegramAdminId = process.env.ADMIN_ID || '5655572400';
 
   async sendActivationLink({
     email,
@@ -37,13 +32,10 @@ export class MailService {
     const activationLink = `http://localhost:${process.env.PORT}/api/auth/activate/${token}`;
 
     if (!email) {
-    
-      throw new Error("Email manzili kiritilmagan!");
+      throw new Error('Email manzili kiritilmagan!');
     }
 
-    
-
-    const subject = "🔐 Hisobingizni faollashtirish havolasi";
+    const subject = '🔐 Hisobingizni faollashtirish havolasi';
 
     const text = `
 Assalomu alaykum ${name}!
@@ -67,14 +59,11 @@ Bizning jamoamiz.
         text,
       });
 
-
-
-
-      return { success: true, message: "Aktivatsiya xati yuborildi" };
+      return { success: true, message: 'Aktivatsiya xati yuborildi' };
     } catch (error) {
       console.log(error);
-      
-      throw new Error("Aktivatsiya havolasini yuborishda xatolik yuz berdi");
+
+      throw new Error('Aktivatsiya havolasini yuborishda xatolik yuz berdi');
     }
   }
 
@@ -101,14 +90,13 @@ Bizning jamoamiz.
         {
           chat_id: Number(this.telegramAdminId),
           text,
-        }
+        },
       );
-
     } catch (error) {
       throw new Error(
         `Telegram xabarni yuborishda xatolik: ${error.message}, Telegram: ${JSON.stringify(
-          error.response?.data || {}
-        )}`
+          error.response?.data || {},
+        )}`,
       );
     }
   }
