@@ -37,7 +37,7 @@ import { MailModule } from './mail/mail.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
-      dropSchema: false,
+      dropSchema: true,
     }),
     JwtModule.register({
       secret: process.env.SECRET_KEY,
