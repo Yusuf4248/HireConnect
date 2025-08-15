@@ -105,7 +105,7 @@ export class HrSpecialist {
     example: true,
     description: 'Indicates if the HR specialist account is active',
   })
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'boolean', default: false })
   is_active: boolean;
 
   @ApiProperty({

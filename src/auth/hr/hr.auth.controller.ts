@@ -27,8 +27,11 @@ export class HrAuthController {
     description: 'Validation failed or HR specialist already exists',
   })
   @ApiBody({ type: CreateHrSpecialistDto })
-  async register(@Body() createHrSpecialistDto: CreateHrSpecialistDto) {
-    return this.hrAuthService.register(createHrSpecialistDto);
+  async register(
+    @Body() createHrSpecialistDto: CreateHrSpecialistDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.hrAuthService.register(createHrSpecialistDto, res);
   }
 
   @Post('log-in')
