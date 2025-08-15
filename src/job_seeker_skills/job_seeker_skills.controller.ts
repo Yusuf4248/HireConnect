@@ -11,12 +11,9 @@ import {
 import { JobSeekerSkillService } from './job_seeker_skills.service';
 import { CreateJobSeekerSkillDto } from './dto/create-job_seeker_skill.dto';
 import { UpdateJobSeekerSkillDto } from './dto/update-job_seeker_skill.dto';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
+
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';

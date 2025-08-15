@@ -98,7 +98,7 @@ export class JobApplicationsController {
 
   @Get(':id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('admin', 'hr')
+  @Roles('admin', 'hr','jobSeeker')
   @ApiOperation({ summary: 'Get a job application by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Job application ID' })
   @ApiResponse({
