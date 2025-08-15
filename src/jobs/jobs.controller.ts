@@ -42,7 +42,7 @@ export class JobsController {
 
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('jobSeeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Retrieve all job postings' })
   @ApiResponse({
     status: 200,
@@ -54,7 +54,7 @@ export class JobsController {
 
   @Get('search/:term')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Search for jobs by keyword' })
   @ApiParam({ name: 'term', description: 'Search keyword' })
   @ApiResponse({
@@ -67,7 +67,7 @@ export class JobsController {
 
   @Get(':id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Retrieve details of a specific job' })
   @ApiParam({ name: 'id', description: 'Job ID' })
   @ApiResponse({

@@ -11,7 +11,12 @@ import {
 import { JobSkillsService } from './job_skills.service';
 import { CreateJobSkillDto } from './dto/create-job_skill.dto';
 import { UpdateJobSkillDto } from './dto/update-job_skill.dto';
-import { ApiTags, ApiOperation, ApiResponse,ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -20,12 +25,11 @@ import { RolesGuard } from '../common/guards/roles.guard';
 @ApiBearerAuth()
 @Controller('job-skills')
 @UseGuards(AuthGuard, RolesGuard)
-
 export class JobSkillsController {
   constructor(private readonly jobSkillsService: JobSkillsService) {}
 
   @Post()
-  @Roles('hr')
+  @Roles('hr', 'admin')
   @ApiOperation({ summary: 'Create a new job skill' })
   @ApiResponse({ status: 201, description: 'Job skill successfully created' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })

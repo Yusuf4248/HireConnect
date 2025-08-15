@@ -10,7 +10,7 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseGuards,
-} from "@nestjs/common";
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -18,14 +18,14 @@ import {
   ApiQuery,
   ApiParam,
   ApiBearerAuth,
-} from "@nestjs/swagger";
-import { JobApplicationsService } from "./job-applications.service";
-import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
-import { UpdateJobApplicationDto } from "./dto/update-job-application.dto";
-import { JobApplication } from "./entities/job-application.entity";
-import { AuthGuard } from "../common/guards/auth.guard";
-import { RolesGuard } from "../common/guards/roles.guard";
-import { Roles } from "../common/decorators/roles-auth.decorator";
+} from '@nestjs/swagger';
+import { JobApplicationsService } from './job-applications.service';
+import { CreateJobApplicationDto } from './dto/create-job-application.dto';
+import { UpdateJobApplicationDto } from './dto/update-job-application.dto';
+import { JobApplication } from './entities/job-application.entity';
+import { AuthGuard } from '../common/guards/auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles-auth.decorator';
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -36,7 +36,7 @@ export class JobApplicationsController {
   ) {}
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('jobSeeker')
+  @Roles('job_seeker', 'admin')
   @Post()
   @ApiOperation({ summary: 'Create a new job application' })
   @ApiResponse({

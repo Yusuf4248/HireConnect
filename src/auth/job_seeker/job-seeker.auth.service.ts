@@ -22,7 +22,7 @@ export class JobSeekerAuthService {
     const payload = {
       id: jobSeeker.id,
       email: jobSeeker.email,
-      role: 'jobSeeker',
+      role: 'job_seeker',
     };
 
     const [accessToken, refreshToken] = await Promise.all([

@@ -36,7 +36,7 @@ export class JobSeekersController {
   constructor(private readonly jobSeekersService: JobSeekersService) {}
 
   @Post()
-  @Roles('job_seeker') // faqat job seeker roliga ruxsat
+  @Roles('job_seeker', 'admin') // faqat job seeker roliga ruxsat
   @UseGuards(IsJobSeekerGuard)
   @ApiOperation({ summary: 'Create a new job seeker' })
   @ApiCreatedResponse({
@@ -50,6 +50,7 @@ export class JobSeekersController {
   }
 
   @Get()
+  @Roles('admin')
   @ApiOperation({ summary: 'Get all job seekers' })
   @ApiOkResponse({
     description: 'List of all job seekers',
@@ -60,6 +61,7 @@ export class JobSeekersController {
   }
 
   @Get(':id')
+  @Roles('admin', 'job_seeker')
   @ApiOperation({ summary: 'Get a job seeker by ID' })
   @ApiOkResponse({
     description: 'The job seeker with the requested ID',
@@ -76,7 +78,7 @@ export class JobSeekersController {
   }
 
   @Patch(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @UseGuards(IsJobSeekerGuard)
   @ApiOperation({ summary: 'Update a job seeker' })
   @ApiOkResponse({
@@ -99,7 +101,7 @@ export class JobSeekersController {
   }
 
   @Delete(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @UseGuards(IsJobSeekerGuard)
   @ApiOperation({ summary: 'Delete a job seeker' })
   @ApiOkResponse({
