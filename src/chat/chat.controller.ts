@@ -1,10 +1,25 @@
 import { AuthGuard } from './../common/guards/auth.guard';
-import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { ChatsService } from './chat.service';
 import { Chat } from './entities/chat.entity';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
 import { IsHrGuard } from '../common/guards/is.hr.guard';
 import { IsJobSeekerGuard } from '../common/guards/is.job.seeker.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -17,7 +32,7 @@ export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
 
   @Post()
-  @Roles('jobSeeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Create a new chat' })
   @ApiBody({ type: CreateChatDto })
   @ApiResponse({
@@ -31,7 +46,7 @@ export class ChatsController {
   }
 
   @Get()
-  @Roles('admin','hr','jobSeeker')
+  @Roles('admin', 'hr', 'job_seeker')
   @ApiOperation({ summary: 'Get all chats' })
   @ApiResponse({ status: 200, description: 'List of all chats', type: [Chat] })
   findAll() {
@@ -39,7 +54,7 @@ export class ChatsController {
   }
 
   @Get(':id')
-  @Roles('jobSeeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Get a chat by ID' })
   @ApiParam({ name: 'id', description: 'Chat ID', type: String })
   @ApiResponse({ status: 200, description: 'Chat found', type: Chat })
@@ -49,7 +64,7 @@ export class ChatsController {
   }
 
   @Patch(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Update a chat by ID' })
   @ApiParam({ name: 'id', description: 'Chat ID', type: Number })
   @ApiBody({ type: UpdateChatDto })
@@ -65,7 +80,7 @@ export class ChatsController {
   }
 
   @Delete(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Delete a chat by ID' })
   @ApiParam({ name: 'id', description: 'Chat ID', type: String })
   @ApiResponse({ status: 200, description: 'Chat deleted successfully' })

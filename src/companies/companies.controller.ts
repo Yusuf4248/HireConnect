@@ -12,7 +12,14 @@ import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { IsHrGuard } from '../common/guards/is.hr.guard';
 import { IsAdminGuard } from '../common/guards/is.admin.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
@@ -27,7 +34,7 @@ export class CompaniesController {
   constructor(private readonly companyService: CompaniesService) {}
 
   @Post()
-  @Roles('hr')
+  @Roles('hr', 'admin')
   @ApiOperation({ summary: 'Create a new company' })
   @ApiBody({ type: CreateCompanyDto })
   @ApiResponse({
@@ -68,7 +75,7 @@ export class CompaniesController {
   }
 
   @Patch(':id')
-  @Roles('hr')
+  @Roles('hr', 'admin')
   @ApiOperation({ summary: 'Update a company by ID' })
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiBody({ type: UpdateCompanyDto })
@@ -83,7 +90,7 @@ export class CompaniesController {
   }
 
   @Delete(':id')
-  @Roles('admin')
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Delete a company by ID' })
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiResponse({ status: 200, description: 'Company deleted successfully' })

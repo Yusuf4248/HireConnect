@@ -13,7 +13,7 @@ export class IsHrGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
 
-    if (!req.user || req.user.role !== 'Hr') {
+    if (!req.user || req.user.role !== 'hr') {
       throw new ForbiddenException({
         message: 'Faqat Hr uchun ruxsat berilgan',
       });  
