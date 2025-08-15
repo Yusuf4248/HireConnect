@@ -18,6 +18,7 @@ import {
   ApiQuery,
   ApiParam,
   ApiBearerAuth,
+  ApiBody,
 } from "@nestjs/swagger";
 import { JobApplicationsService } from "./job-applications.service";
 import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
@@ -26,6 +27,7 @@ import { JobApplication } from "./entities/job-application.entity";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
 import { Roles } from "../common/decorators/roles-auth.decorator";
+import { JobApplicationFiltersDto } from "./dto/job-application-filters.dto";
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -138,5 +140,52 @@ export class JobApplicationsController {
   @ApiResponse({ status: 404, description: 'Job application not found' })
   remove(@Param('id') id: string) {
     return this.jobApplicationsService.remove(+id);
+  }
+
+
+
+
+
+  //-----------------filters---beta!
+
+  @Post('filters')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin', 'hr')
+  @ApiOperation({ summary: 'Get filtered job applications' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of filtered job applications',
+    schema: {
+      example: {
+        message: 'Filtered job applications',
+        success: true,
+        data: [
+          {
+            id: 1,
+            job_seeker_id: 42,
+            job_id: 10,
+            resume_id: 101,
+            cover_letter: 'I am excited to apply...',
+            status: 'pending',
+            applied_at: '2024-08-07T12:34:56.000Z',
+            reviewed_at: null,
+            notes: 'Candidate has experience.',
+            job: { id: 10, title: 'Senior Dev' },
+            job_seeker: { id: 42, name: 'John Doe' },
+            chat: null,
+          },
+        ],
+        meta: { total: 1, page: 1, limit: 10, totalPages: 1 },
+      },
+    },
+  })
+  @ApiBody({ type: JobApplicationFiltersDto, description: 'Filter criteria for job applications' })
+  async filters(@Body() filters: JobApplicationFiltersDto) {
+    const { page = 1, limit = 10, sort_by = 'applied_at', sort_order = 'DESC', ...filterParams } = filters;
+    return this.jobApplicationsService.filters({
+      filters: filterParams as any,
+      pagination: { page, limit },
+      sort: { sortBy: sort_by, sortOrder: sort_order },
+    });
   }
 }
