@@ -8,10 +8,10 @@ import {
   Delete,
   Query,
   UseGuards,
-} from "@nestjs/common";
-import { EducationService } from "./education.service";
-import { CreateEducationDto } from "./dto/create-education.dto";
-import { UpdateEducationDto } from "./dto/update-education.dto";
+} from '@nestjs/common';
+import { EducationService } from './education.service';
+import { CreateEducationDto } from './dto/create-education.dto';
+import { UpdateEducationDto } from './dto/update-education.dto';
 import {
   ApiTags,
   ApiOperation,
@@ -20,11 +20,11 @@ import {
   ApiQuery,
   ApiBody,
   ApiBearerAuth,
-} from "@nestjs/swagger";
-import { AuthGuard } from "../common/guards/auth.guard";
-import { RolesGuard } from "../common/guards/roles.guard";
-import { Roles } from "../common/decorators/roles-auth.decorator";
-import { IsJobSeekerGuard } from "../common/guards/is.job.seeker.guard";
+} from '@nestjs/swagger';
+import { AuthGuard } from '../common/guards/auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles-auth.decorator';
+import { IsJobSeekerGuard } from '../common/guards/is.job.seeker.guard';
 
 @ApiTags('Education')
 @ApiBearerAuth()
@@ -34,7 +34,7 @@ export class EducationController {
   constructor(private readonly educationService: EducationService) {}
 
   @Post()
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Create a new education record' })
   @ApiResponse({
     status: 201,
@@ -85,7 +85,7 @@ export class EducationController {
   }
 
   @Patch(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Update an education record by ID' })
   @ApiParam({
     name: 'id',
@@ -113,7 +113,7 @@ export class EducationController {
   }
 
   @Delete(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Delete an education record by ID' })
   @ApiParam({
     name: 'id',

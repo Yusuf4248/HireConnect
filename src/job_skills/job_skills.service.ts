@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { JobSkill } from "./entities/job_skill.entity";
-import { CreateJobSkillDto } from "./dto/create-job_skill.dto";
-import { UpdateJobSkillDto } from "./dto/update-job_skill.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { JobSkill } from './entities/job_skill.entity';
+import { CreateJobSkillDto } from './dto/create-job_skill.dto';
+import { UpdateJobSkillDto } from './dto/update-job_skill.dto';
 
 @Injectable()
 export class JobSkillsService {
   constructor(
     @InjectRepository(JobSkill)
-    private readonly jobSkillRepository: Repository<JobSkill>
+    private readonly jobSkillRepository: Repository<JobSkill>,
   ) {}
 
   async create(createJobSkillDto: CreateJobSkillDto): Promise<JobSkill> {
@@ -31,7 +31,7 @@ export class JobSkillsService {
 
   async update(
     id: number,
-    updateJobSkillDto: UpdateJobSkillDto
+    updateJobSkillDto: UpdateJobSkillDto,
   ): Promise<JobSkill> {
     const jobSkill = await this.findOne(id);
     Object.assign(jobSkill, updateJobSkillDto);

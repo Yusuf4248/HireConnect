@@ -9,10 +9,10 @@ import {
   Delete,
   Query,
   UseGuards,
-} from "@nestjs/common";
-import { ContactsService } from "./contacts.service";
-import { CreateContactDto } from "./dto/create-contact.dto";
-import { UpdateContactDto } from "./dto/update-contact.dto";
+} from '@nestjs/common';
+import { ContactsService } from './contacts.service';
+import { CreateContactDto } from './dto/create-contact.dto';
+import { UpdateContactDto } from './dto/update-contact.dto';
 import {
   ApiTags,
   ApiOperation,
@@ -21,9 +21,9 @@ import {
   ApiBody,
   ApiQuery,
   ApiBearerAuth,
-} from "@nestjs/swagger";
-import { Roles } from "../common/decorators/roles-auth.decorator";
-import { RolesGuard } from "../common/guards/roles.guard";
+} from '@nestjs/swagger';
+import { Roles } from '../common/decorators/roles-auth.decorator';
+import { RolesGuard } from '../common/guards/roles.guard';
 
 @ApiTags('Contacts')
 @ApiBearerAuth()
@@ -33,7 +33,7 @@ export class ContactsController {
   constructor(private readonly contactsService: ContactsService) {}
 
   @Post()
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Create a new contact' })
   @ApiResponse({ status: 201, description: 'Contact successfully created' })
   @ApiResponse({ status: 400, description: 'Validation failed' })
@@ -43,7 +43,7 @@ export class ContactsController {
   }
 
   @Get()
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Get all contacts' })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
@@ -63,7 +63,7 @@ export class ContactsController {
   }
 
   @Patch(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Update contact by ID' })
   @ApiParam({
     name: 'id',
@@ -79,7 +79,7 @@ export class ContactsController {
   }
 
   @Delete(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Delete contact by ID' })
   @ApiParam({
     name: 'id',

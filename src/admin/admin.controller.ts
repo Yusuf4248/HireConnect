@@ -21,7 +21,7 @@ import { IsSuperAdminGuard } from '../common/guards/is.super.admin.guard';
 @ApiTags('admin')
 @ApiBearerAuth()
 @Controller('admin')
-@UseGuards(AuthGuard, IsAdminGuard) 
+@UseGuards(AuthGuard, IsAdminGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
