@@ -27,8 +27,11 @@ export class JobSeekerAuthController {
     description: 'Validation failed or job seeker already exists',
   })
   @ApiBody({ type: CreateJobSeekerDto })
-  async register(@Body() createJobSeekerDto: CreateJobSeekerDto) {
-    return this.jobSeekerAuthService.register(createJobSeekerDto);
+  async register(
+    @Body() createJobSeekerDto: CreateJobSeekerDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.jobSeekerAuthService.register(createJobSeekerDto, res);
   }
 
   @Post('log-in')

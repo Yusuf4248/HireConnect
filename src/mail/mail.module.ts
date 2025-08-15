@@ -1,31 +1,29 @@
 import { Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ConfigService, ConfigModule } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
-    ConfigModule,
     MailerModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
         transport: {
-          host: config.get<string>('EMAIL_HOST') || 'smtp.gmail.com',
+          host: config.get<string>('SMTP_HOST'),
           secure: false,
           auth: {
-            user:
-              config.get<string>('EMAIL_USER') || 'sevarahalilova28@gmail.com',
-            pass: config.get<string>('EMAIL_PASS') || 'ssbhilyrhjmqiihm',
+            user: config.get<string>('SMTP_USER'),
+            pass: config.get<string>('SMTP_PASSWORD'),
           },
         },
         defaults: {
-          from: `"Skidkachi" <${config.get<string>('ACTIVATION_BASE_URL')}`,
+          from: `"Hire Connect" <${config.get<string>('SMTP_HOST')}>`,
         },
         template: {
           dir: join(__dirname, 'templates'),
           adapter: new HandlebarsAdapter(),
+          template: 'otp',
           options: {
             strict: true,
           },

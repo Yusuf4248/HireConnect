@@ -10,12 +10,14 @@ import * as bcrypt from 'bcrypt';
 import { HrSpecialistsService } from '../../hr_specialists/hr_specialists.service';
 import { HrSpecialist } from '../../hr_specialists/entities/hr_specialist.entity';
 import { CreateHrSpecialistDto } from '../../hr_specialists/dto/create-hr_specialist.dto';
+import { OtpService } from '../../otp/otp.service';
 
 @Injectable()
 export class HrAuthService {
   constructor(
     private readonly hrService: HrSpecialistsService,
     private readonly jwtService: JwtService,
+    private readonly otpService: OtpService,
   ) {}
 
   async generateTokens(hr: HrSpecialist) {
@@ -42,16 +44,18 @@ export class HrAuthService {
     };
   }
 
-  async register(createHrDto: CreateHrSpecialistDto) {
+  async register(createHrDto: CreateHrSpecialistDto, res: Response) {
     const candidate = await this.hrService.findByEmail(createHrDto.email);
     if (candidate) {
       throw new BadRequestException(
         'Hr specialist with this email already exists',
       );
     }
-    const lid = await this.hrService.create(createHrDto);
+    const hr = await this.hrService.create(createHrDto);
+    const data = await this.otpService.generateNewOtp(hr.email, 'hr', res);
     return {
-      lid,
+      message: data.message,
+      hr,
     };
   }
 

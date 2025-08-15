@@ -10,12 +10,14 @@ import * as bcrypt from 'bcrypt';
 import { JobSeekersService } from '../../job_seekers/job_seekers.service';
 import { JobSeeker } from '../../job_seekers/entities/job_seeker.entity';
 import { CreateJobSeekerDto } from '../../job_seekers/dto/create-job_seeker.dto';
+import { OtpService } from '../../otp/otp.service';
 
 @Injectable()
 export class JobSeekerAuthService {
   constructor(
     private readonly jobSeekerService: JobSeekersService,
     private readonly jwtService: JwtService,
+    private readonly otpService: OtpService,
   ) {}
 
   async generateTokens(jobSeeker: JobSeeker) {
@@ -42,7 +44,7 @@ export class JobSeekerAuthService {
     };
   }
 
-  async register(createJobSeekerDto: CreateJobSeekerDto) {
+  async register(createJobSeekerDto: CreateJobSeekerDto, res: Response) {
     const candidate = await this.jobSeekerService.findByEmail(
       createJobSeekerDto.email,
     );
@@ -51,9 +53,15 @@ export class JobSeekerAuthService {
         'job seeker with this email already exists',
       );
     }
-    const lid = await this.jobSeekerService.create(createJobSeekerDto);
+    const job_seeker = await this.jobSeekerService.create(createJobSeekerDto);
+    const data = await this.otpService.generateNewOtp(
+      job_seeker.email,
+      'hr',
+      res,
+    );
     return {
-      lid,
+      message: data.message,
+      job_seeker,
     };
   }
 
