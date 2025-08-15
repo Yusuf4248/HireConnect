@@ -13,7 +13,7 @@ export class IsJobSeekerGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
 
-    if (!req.user || req.user.role !== 'job_seeker') {
+    if (!req.user || req.user.role !== 'jobSeeker') {
       throw new ForbiddenException({
         message: 'Faqat Job Seeker uchun ruxsat berilgan',
       });
