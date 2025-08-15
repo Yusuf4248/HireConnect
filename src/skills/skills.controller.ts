@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from "@nestjs/common";
 import { SkillsService } from "./skills.service";
 import { CreateSkillDto } from "./dto/create-skill.dto";
@@ -20,14 +21,19 @@ import {
   ApiQuery,
   ApiBearerAuth,
 } from "@nestjs/swagger";
+import { Roles } from "../common/decorators/roles-auth.decorator";
+import { AuthGuard } from "../common/guards/auth.guard";
+import { RolesGuard } from "../common/guards/roles.guard";
 
 @ApiTags('Skills')
 @ApiBearerAuth()
 @Controller('skills')
+@UseGuards(AuthGuard, RolesGuard)
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
   @Post()
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new skill' })
   @ApiResponse({ status: 201, description: 'Skill successfully created' })
   @ApiResponse({ status: 400, description: 'Validation failed' })
@@ -37,6 +43,7 @@ export class SkillsController {
   }
 
   @Get()
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get all skills with pagination' })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
@@ -46,6 +53,7 @@ export class SkillsController {
   }
 
   @Get(':id')
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get skill by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID of the skill' })
   @ApiResponse({ status: 200, description: 'Skill found' })
@@ -55,6 +63,7 @@ export class SkillsController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update skill by ID' })
   @ApiParam({
     name: 'id',
@@ -70,6 +79,7 @@ export class SkillsController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete skill by ID' })
   @ApiParam({
     name: 'id',
@@ -83,6 +93,7 @@ export class SkillsController {
   }
 
   @Get('by-name/:name')
+  @Roles('hr')
   @ApiOperation({ summary: 'Get skill by name' })
   @ApiParam({ name: 'name', type: String, example: 'JavaScript' })
   @ApiResponse({ status: 200, description: 'Skill found' })

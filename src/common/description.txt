@@ -1,1 +1,5 @@
 enums folderda table lar uchun ishlatilgan enum typelar yig'ilgan!
+hamma foreign key va o'zgaruvchilar snake_case
+enum lar 
+
+

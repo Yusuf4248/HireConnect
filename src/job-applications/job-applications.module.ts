@@ -3,9 +3,11 @@ import { JobApplicationsService } from "./job-applications.service";
 import { JobApplicationsController } from "./job-applications.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JobApplication } from "./entities/job-application.entity";
+import { JwtModule } from "@nestjs/jwt";
+import { ChatsModule } from "src/chat/chat.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([JobApplication])],
+  imports: [TypeOrmModule.forFeature([JobApplication]), JwtModule,ChatsModule],
   controllers: [JobApplicationsController],
   providers: [JobApplicationsService],
 })

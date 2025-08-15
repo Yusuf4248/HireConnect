@@ -6,14 +6,14 @@ import {
   Patch,
   Param,
   Delete,
-} from "@nestjs/common";
-import { JobSeekersService } from "./job_seekers.service";
-import { CreateJobSeekerDto } from "./dto/create-job_seeker.dto";
-import { UpdateJobSeekerDto } from "./dto/update-job_seeker.dto";
+  UseGuards,
+} from '@nestjs/common';
+import { JobSeekersService } from './job_seekers.service';
+import { CreateJobSeekerDto } from './dto/create-job_seeker.dto';
+import { UpdateJobSeekerDto } from './dto/update-job_seeker.dto';
 import {
   ApiTags,
   ApiOperation,
-  ApiResponse,
   ApiParam,
   ApiBody,
   ApiCreatedResponse,
@@ -21,85 +21,97 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiBearerAuth,
-} from "@nestjs/swagger";
+} from '@nestjs/swagger';
 
-@ApiTags("Job Seekers")
+import { AuthGuard } from '../common/guards/auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles-auth.decorator';
+import { IsJobSeekerGuard } from '../common/guards/is.job.seeker.guard';
+
+@ApiTags('Job Seekers')
 @ApiBearerAuth()
-@Controller("job-seekers")
+@Controller('job-seekers')
+@UseGuards(AuthGuard, RolesGuard) // butun controller uchun umumiy guard
 export class JobSeekersController {
   constructor(private readonly jobSeekersService: JobSeekersService) {}
 
   @Post()
-  @ApiOperation({ summary: "Create a new job seeker" })
+  @Roles('job_seeker') // faqat job seeker roliga ruxsat
+  @UseGuards(IsJobSeekerGuard)
+  @ApiOperation({ summary: 'Create a new job seeker' })
   @ApiCreatedResponse({
-    description: "The job seeker has been successfully created",
+    description: 'The job seeker has been successfully created',
     type: CreateJobSeekerDto,
   })
-  @ApiBadRequestResponse({ description: "Invalid input data" })
+  @ApiBadRequestResponse({ description: 'Invalid input data' })
   @ApiBody({ type: CreateJobSeekerDto })
   create(@Body() createJobSeekerDto: CreateJobSeekerDto) {
     return this.jobSeekersService.create(createJobSeekerDto);
   }
 
   @Get()
-  @ApiOperation({ summary: "Get all job seekers" })
+  @ApiOperation({ summary: 'Get all job seekers' })
   @ApiOkResponse({
-    description: "List of all job seekers",
+    description: 'List of all job seekers',
     type: [CreateJobSeekerDto],
   })
   findAll() {
     return this.jobSeekersService.findAll();
   }
 
-  @Get(":id")
-  @ApiOperation({ summary: "Get a job seeker by ID" })
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a job seeker by ID' })
   @ApiOkResponse({
-    description: "The job seeker with the requested ID",
+    description: 'The job seeker with the requested ID',
     type: CreateJobSeekerDto,
   })
-  @ApiNotFoundResponse({ description: "Job seeker not found" })
+  @ApiNotFoundResponse({ description: 'Job seeker not found' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the job seeker to retrieve",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the job seeker to retrieve',
   })
-  findOne(@Param("id") id: string) {
+  findOne(@Param('id') id: string) {
     return this.jobSeekersService.findOne(+id);
   }
 
-  @Patch(":id")
-  @ApiOperation({ summary: "Update a job seeker" })
+  @Patch(':id')
+  @Roles('job_seeker')
+  @UseGuards(IsJobSeekerGuard)
+  @ApiOperation({ summary: 'Update a job seeker' })
   @ApiOkResponse({
-    description: "The job seeker has been successfully updated",
+    description: 'The job seeker has been successfully updated',
     type: UpdateJobSeekerDto,
   })
-  @ApiNotFoundResponse({ description: "Job seeker not found" })
-  @ApiBadRequestResponse({ description: "Invalid input data" })
+  @ApiNotFoundResponse({ description: 'Job seeker not found' })
+  @ApiBadRequestResponse({ description: 'Invalid input data' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the job seeker to update",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the job seeker to update',
   })
   @ApiBody({ type: UpdateJobSeekerDto })
   update(
-    @Param("id") id: string,
-    @Body() updateJobSeekerDto: UpdateJobSeekerDto
+    @Param('id') id: string,
+    @Body() updateJobSeekerDto: UpdateJobSeekerDto,
   ) {
     return this.jobSeekersService.update(+id, updateJobSeekerDto);
   }
 
-  @Delete(":id")
-  @ApiOperation({ summary: "Delete a job seeker" })
+  @Delete(':id')
+  @Roles('job_seeker')
+  @UseGuards(IsJobSeekerGuard)
+  @ApiOperation({ summary: 'Delete a job seeker' })
   @ApiOkResponse({
-    description: "The job seeker has been successfully deleted",
+    description: 'The job seeker has been successfully deleted',
   })
-  @ApiNotFoundResponse({ description: "Job seeker not found" })
+  @ApiNotFoundResponse({ description: 'Job seeker not found' })
   @ApiParam({
-    name: "id",
-    type: "number",
-    description: "ID of the job seeker to delete",
+    name: 'id',
+    type: 'number',
+    description: 'ID of the job seeker to delete',
   })
-  remove(@Param("id") id: string) {
+  remove(@Param('id') id: string) {
     return this.jobSeekersService.remove(+id);
   }
 }

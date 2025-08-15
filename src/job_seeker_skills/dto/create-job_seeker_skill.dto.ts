@@ -3,18 +3,18 @@ import { ProficiencyLevel } from "../../common/enums/job_seeker_skills.enum";
 
 export class CreateJobSeekerSkillDto {
   @IsNumber()
-  jobSeekerId: number;
+  job_seeker_id: number;
 
   @IsNumber()
-  skillId: number;
+  skill_id: number;
 
 
 
   @IsOptional()
   @IsEnum(ProficiencyLevel)
-  proficiencyLevel?: ProficiencyLevel;
+  proficiency_level?: ProficiencyLevel;
 
   @IsOptional()
   @IsInt()
-  yearsOfExperience?: number;
+  years_of_experience?: number;
 }

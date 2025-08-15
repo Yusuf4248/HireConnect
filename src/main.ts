@@ -40,7 +40,7 @@ async function start() {
       .setTitle("Hire Connect Project")
       .setDescription("Hire Connect-Rest-Api")
       .setVersion("1.0")
-      .addTag("NESTJS", "Validation, SWAGGER, BOT, TOKENS, SENDMAIL")
+      .addTag("NESTJS", "Validation, SWAGGER, TOKENS, SENDMAIL")
       .addTag("Nest js", "GUARD, AUTH")
       .addBearerAuth()
       .build();

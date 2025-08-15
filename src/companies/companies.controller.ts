@@ -1,16 +1,33 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { IsHrGuard } from '../common/guards/is.hr.guard';
+import { IsAdminGuard } from '../common/guards/is.admin.guard';
+import { Roles } from '../common/decorators/roles-auth.decorator';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @ApiTags('companies')
 @ApiBearerAuth()
 @Controller('companies')
+@UseGuards(AuthGuard, RolesGuard)
 export class CompaniesController {
   constructor(private readonly companyService: CompaniesService) {}
 
   @Post()
+  @Roles('hr')
   @ApiOperation({ summary: 'Create a new company' })
   @ApiBody({ type: CreateCompanyDto })
   @ApiResponse({
@@ -24,6 +41,7 @@ export class CompaniesController {
   }
 
   @Get()
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get all companies' })
   @ApiResponse({
     status: 200,
@@ -35,6 +53,8 @@ export class CompaniesController {
   }
 
   @Get(':id')
+  @Roles('admin', 'hr')
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Get a company by ID' })
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiResponse({
@@ -48,6 +68,7 @@ export class CompaniesController {
   }
 
   @Patch(':id')
+  @Roles('hr')
   @ApiOperation({ summary: 'Update a company by ID' })
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiBody({ type: UpdateCompanyDto })
@@ -62,6 +83,7 @@ export class CompaniesController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a company by ID' })
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiResponse({ status: 200, description: 'Company deleted successfully' })

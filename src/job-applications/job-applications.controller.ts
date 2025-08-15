@@ -9,6 +9,7 @@ import {
   Query,
   DefaultValuePipe,
   ParseIntPipe,
+  UseGuards,
 } from "@nestjs/common";
 import {
   ApiTags,
@@ -22,6 +23,9 @@ import { JobApplicationsService } from "./job-applications.service";
 import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
 import { UpdateJobApplicationDto } from "./dto/update-job-application.dto";
 import { JobApplication } from "./entities/job-application.entity";
+import { AuthGuard } from "../common/guards/auth.guard";
+import { RolesGuard } from "../common/guards/roles.guard";
+import { Roles } from "../common/decorators/roles-auth.decorator";
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -31,6 +35,8 @@ export class JobApplicationsController {
     private readonly jobApplicationsService: JobApplicationsService,
   ) {}
 
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('jobSeeker')
   @Post()
   @ApiOperation({ summary: 'Create a new job application' })
   @ApiResponse({
@@ -43,6 +49,8 @@ export class JobApplicationsController {
   }
 
   @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get a paginated list of job applications' })
   @ApiQuery({
     name: 'page',
@@ -89,6 +97,8 @@ export class JobApplicationsController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get a job application by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Job application ID' })
   @ApiResponse({
@@ -102,6 +112,8 @@ export class JobApplicationsController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Update a job application by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Job application ID' })
   @ApiResponse({
@@ -118,6 +130,8 @@ export class JobApplicationsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Delete a job application by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Job application ID' })
   @ApiResponse({ status: 200, description: 'Job application deleted' })

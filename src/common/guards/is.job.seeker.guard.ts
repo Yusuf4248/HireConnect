@@ -15,7 +15,7 @@ export class IsJobSeekerGuard implements CanActivate {
 
     if (!req.user || req.user.role !== 'job_seeker') {
       throw new ForbiddenException({
-        message: 'Faqat Hr uchun ruxsat berilgan',
+        message: 'Faqat Job Seeker uchun ruxsat berilgan',
       });
     }
 

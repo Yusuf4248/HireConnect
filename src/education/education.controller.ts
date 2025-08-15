@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from "@nestjs/common";
 import { EducationService } from "./education.service";
 import { CreateEducationDto } from "./dto/create-education.dto";
@@ -20,14 +21,20 @@ import {
   ApiBody,
   ApiBearerAuth,
 } from "@nestjs/swagger";
+import { AuthGuard } from "../common/guards/auth.guard";
+import { RolesGuard } from "../common/guards/roles.guard";
+import { Roles } from "../common/decorators/roles-auth.decorator";
+import { IsJobSeekerGuard } from "../common/guards/is.job.seeker.guard";
 
 @ApiTags('Education')
 @ApiBearerAuth()
 @Controller('educations')
+@UseGuards(AuthGuard, RolesGuard)
 export class EducationController {
   constructor(private readonly educationService: EducationService) {}
 
   @Post()
+  @Roles('job_seeker')
   @ApiOperation({ summary: 'Create a new education record' })
   @ApiResponse({
     status: 201,
@@ -43,6 +50,8 @@ export class EducationController {
   }
 
   @Get()
+  @Roles('hr', 'admin')
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get all educations with pagination' })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
@@ -55,6 +64,8 @@ export class EducationController {
   }
 
   @Get(':id')
+  @Roles('hr', 'admin')
+  @Roles('admin', 'hr')
   @ApiOperation({ summary: 'Get a single education record by ID' })
   @ApiParam({
     name: 'id',
@@ -74,6 +85,7 @@ export class EducationController {
   }
 
   @Patch(':id')
+  @Roles('job_seeker')
   @ApiOperation({ summary: 'Update an education record by ID' })
   @ApiParam({
     name: 'id',
@@ -101,6 +113,7 @@ export class EducationController {
   }
 
   @Delete(':id')
+  @Roles('job_seeker')
   @ApiOperation({ summary: 'Delete an education record by ID' })
   @ApiParam({
     name: 'id',
