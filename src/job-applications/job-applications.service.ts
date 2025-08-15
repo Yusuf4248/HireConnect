@@ -6,6 +6,32 @@ import { JobApplication } from "./entities/job-application.entity";
 import { Repository } from "typeorm";
 import { ChatsService } from "src/chat/chat.service";
 
+
+interface JobApplicationFilters {
+  status?: string[];
+  job_id?: number;
+  job_seeker_id?: number;
+  applied_at_from?: Date;
+  applied_at_to?: Date;
+  search?: string;
+}
+
+interface Pagination {
+  page: number;
+  limit: number;
+}
+
+interface Sort {
+  sortBy: string;
+  sortOrder: 'ASC' | 'DESC';
+}
+
+interface FindAllOptions {
+  filters: JobApplicationFilters;
+  pagination: Pagination;
+  sort: Sort;
+}
+
 @Injectable()
 export class JobApplicationsService {
   constructor(
@@ -79,6 +105,47 @@ export class JobApplicationsService {
     return {
       message: `Job application with id-${id} deleted`,
       success: true,
+    };
+  }
+
+
+
+
+  async filters({ filters, pagination, sort }: FindAllOptions) {
+    const { page, limit } = pagination;
+    const queryBuilder = this.jobApplicationRepo
+      .createQueryBuilder('ja')
+      .leftJoinAndSelect('ja.job', 'job')
+      .leftJoinAndSelect('ja.job_seeker', 'job_seeker')
+      .leftJoinAndSelect('ja.chat', 'chat');
+
+    if (filters.status?.length) {
+      queryBuilder.andWhere('ja.status IN (:...status)', { status: filters.status });
+    }
+    if (filters.job_id) {
+      queryBuilder.andWhere('ja.job_id = :jobId', { jobId: filters.job_id });
+    }
+    if (filters.job_seeker_id) {
+      queryBuilder.andWhere('ja.job_seeker_id = :jobSeekerId', { jobSeekerId: filters.job_seeker_id });
+    }
+    if (filters.applied_at_from) {
+      queryBuilder.andWhere('ja.applied_at >= :appliedAtFrom', { appliedAtFrom: filters.applied_at_from });
+    }
+    if (filters.applied_at_to) {
+      queryBuilder.andWhere('ja.applied_at <= :appliedAtTo', { appliedAtTo: filters.applied_at_to });
+    }
+    if (filters.search) {
+      queryBuilder.andWhere('(ja.cover_letter ILIKE :search OR ja.notes ILIKE :search)', { search: `%${filters.search}%` });
+    }
+
+    queryBuilder.orderBy(`ja.${sort.sortBy}`, sort.sortOrder).skip((page - 1) * limit).take(limit);
+
+    const [items, total] = await queryBuilder.getManyAndCount();
+    return {
+      message: 'Filtered job applications',
+      success: true,
+      data: items,
+      meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
     };
   }
 }
