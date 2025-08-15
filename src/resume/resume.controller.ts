@@ -22,10 +22,12 @@ import {
   ApiBody,
   ApiParam,
   ApiConsumes,
+  ApiBearerAuth
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('resumes')
+@ApiBearerAuth()
 @Controller('resumes')
 export class ResumeController {
   constructor(private readonly resumeService: ResumeService) {}
@@ -45,7 +47,7 @@ export class ResumeController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }), 
+          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }), // 5MB max
           new FileTypeValidator({ fileType: /(pdf|doc|docx)$/i }),
         ],
       }),

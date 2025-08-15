@@ -19,6 +19,7 @@ import {
   ApiParam,
   ApiQuery,
   ApiBody,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
@@ -26,6 +27,7 @@ import { Roles } from "../common/decorators/roles-auth.decorator";
 import { IsJobSeekerGuard } from "../common/guards/is.job.seeker.guard";
 
 @ApiTags('Education')
+@ApiBearerAuth()
 @Controller('educations')
 @UseGuards(AuthGuard, RolesGuard)
 export class EducationController {

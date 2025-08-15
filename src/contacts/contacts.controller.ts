@@ -20,11 +20,13 @@ import {
   ApiParam,
   ApiBody,
   ApiQuery,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/roles.guard";
 
 @ApiTags('Contacts')
+@ApiBearerAuth()
 @Controller('contacts')
 @UseGuards(AuthGuard, RolesGuard)
 export class ContactsController {

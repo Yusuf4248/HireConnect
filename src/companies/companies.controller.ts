@@ -11,13 +11,8 @@ import {
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBody,
-  ApiParam,
-} from '@nestjs/swagger';
+
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { IsHrGuard } from '../common/guards/is.hr.guard';
 import { IsAdminGuard } from '../common/guards/is.admin.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
@@ -25,6 +20,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { AuthGuard } from '../common/guards/auth.guard';
 
 @ApiTags('companies')
+@ApiBearerAuth()
 @Controller('companies')
 @UseGuards(AuthGuard, RolesGuard)
 export class CompaniesController {

@@ -11,6 +11,7 @@ import {
 import { JobCategoriesService } from './job_categories.service';
 import { CreateJobCategoryDto } from './dto/create-job_category.dto';
 import { UpdateJobCategoryDto } from './dto/update-job_category.dto';
+
 import {
   ApiTags,
   ApiOperation,

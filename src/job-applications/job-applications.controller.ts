@@ -17,6 +17,7 @@ import {
   ApiResponse,
   ApiQuery,
   ApiParam,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 import { JobApplicationsService } from "./job-applications.service";
 import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
@@ -27,6 +28,7 @@ import { RolesGuard } from "../common/guards/roles.guard";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 
 @ApiTags('Job Applications')
+@ApiBearerAuth()
 @Controller('job-applications')
 export class JobApplicationsController {
   constructor(

@@ -17,12 +17,14 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth
 } from '@nestjs/swagger';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 
 @ApiTags('Jobs')
+@ApiBearerAuth()
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}

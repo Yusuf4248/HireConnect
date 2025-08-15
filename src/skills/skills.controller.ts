@@ -19,12 +19,14 @@ import {
   ApiParam,
   ApiBody,
   ApiQuery,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
 
 @ApiTags('Skills')
+@ApiBearerAuth()
 @Controller('skills')
 @UseGuards(AuthGuard, RolesGuard)
 export class SkillsController {

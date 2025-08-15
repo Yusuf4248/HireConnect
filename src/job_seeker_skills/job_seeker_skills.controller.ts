@@ -16,7 +16,9 @@ import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 
+
 @ApiTags('Job Seeker Skills')
+@ApiBearerAuth()
 @Controller('job-seeker-skills')
 @UseGuards(AuthGuard, RolesGuard)
 export class JobSeekerSkillsController {
@@ -59,6 +61,7 @@ export class JobSeekerSkillsController {
     description: 'The skill has been successfully updated.',
   })
   @ApiResponse({ status: 404, description: 'Skill not found.' })
+
   update(
     @Param('id') id: string,
     @Body() updateJobSeekerSkillDto: UpdateJobSeekerSkillDto,
