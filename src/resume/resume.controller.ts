@@ -22,7 +22,7 @@ import {
   ApiBody,
   ApiParam,
   ApiConsumes,
-  ApiBearerAuth
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -42,6 +42,30 @@ export class ResumeController {
     type: CreateResumeDto,
   })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
+  @ApiBody({
+    description: "Resume ma'lumotlari va faylni yuboring",
+    required: true,
+    schema: {
+      type: 'object',
+      properties: {
+        job_seeker_id: {
+          type: 'number',
+          example: 123,
+          description: 'Job seeker ID associated with the resume',
+        },
+        is_primary: {
+          type: 'boolean',
+          example: true,
+          description: 'Whether this is the primary resume',
+        },
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Yuklanayotgan resume fayl (.pdf, .doc, .docx)',
+        },
+      },
+    },
+  })
   async create(
     @Body() dto: CreateResumeDto,
     @UploadedFile(
