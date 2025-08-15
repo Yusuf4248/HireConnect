@@ -16,8 +16,8 @@ export class IsHrGuard implements CanActivate {
     if (!req.user || req.user.role !== 'Hr') {
       throw new ForbiddenException({
         message: 'Faqat Hr uchun ruxsat berilgan',
-      });
-    }
+      });  
+    } 
 
     return true;
   }

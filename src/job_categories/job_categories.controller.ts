@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { JobCategoriesService } from './job_categories.service';
 import { CreateJobCategoryDto } from './dto/create-job_category.dto';
 import { UpdateJobCategoryDto } from './dto/update-job_category.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Job Categories")
+@ApiTags('Job Categories')
+@ApiBearerAuth()
 @Controller('job-categories')
 export class JobCategoriesController {
   constructor(private readonly jobCategoriesService: JobCategoriesService) {}
@@ -25,7 +26,10 @@ export class JobCategoriesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateJobCategoryDto: UpdateJobCategoryDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateJobCategoryDto: UpdateJobCategoryDto,
+  ) {
     return this.jobCategoriesService.update(+id, updateJobCategoryDto);
   }
 

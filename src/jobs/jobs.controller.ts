@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Jobs')
+@ApiBearerAuth()
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
@@ -19,17 +20,15 @@ export class JobsController {
     return this.jobsService.findAll();
   }
 
-@Get('search/:term')
-search(@Param('term') term: string) {
-  return this.jobsService.search(term);
-}
+  @Get('search/:term')
+  search(@Param('term') term: string) {
+    return this.jobsService.search(term);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.jobsService.findOne(+id);
   }
-
-
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
