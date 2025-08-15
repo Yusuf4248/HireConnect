@@ -7,10 +7,10 @@ import {
   Param,
   Delete,
   UseGuards,
-} from "@nestjs/common";
-import { WorkExperienceService } from "./work_experience.service";
-import { CreateWorkExperienceDto } from "./dto/create-work_experience.dto";
-import { UpdateWorkExperienceDto } from "./dto/update-work_experience.dto";
+} from '@nestjs/common';
+import { WorkExperienceService } from './work_experience.service';
+import { CreateWorkExperienceDto } from './dto/create-work_experience.dto';
+import { UpdateWorkExperienceDto } from './dto/update-work_experience.dto';
 import {
   ApiTags,
   ApiOperation,
@@ -18,10 +18,10 @@ import {
   ApiParam,
   ApiBody,
   ApiBearerAuth,
-} from "@nestjs/swagger";
-import { Roles } from "../common/decorators/roles-auth.decorator";
-import { AuthGuard } from "../common/guards/auth.guard";
-import { RolesGuard } from "../common/guards/roles.guard";
+} from '@nestjs/swagger';
+import { Roles } from '../common/decorators/roles-auth.decorator';
+import { AuthGuard } from '../common/guards/auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 
 @ApiTags('Work Experience')
 @ApiBearerAuth()
@@ -31,7 +31,7 @@ export class WorkExperienceController {
   constructor(private readonly workExperienceService: WorkExperienceService) {}
 
   @Post()
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Create work experience' })
   @ApiResponse({
     status: 201,
@@ -44,7 +44,7 @@ export class WorkExperienceController {
   }
 
   @Get()
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Get all work experiences' })
   @ApiResponse({ status: 200, description: 'Return all work experiences.' })
   findAll() {
@@ -52,7 +52,7 @@ export class WorkExperienceController {
   }
 
   @Get(':id')
-  @Roles('job_seeker', 'hr')
+  @Roles('job_seeker', 'hr', 'admin')
   @ApiOperation({ summary: 'Get work experience by ID' })
   @ApiResponse({
     status: 200,
@@ -69,7 +69,7 @@ export class WorkExperienceController {
   }
 
   @Patch(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Update work experience' })
   @ApiResponse({
     status: 200,
@@ -90,7 +90,7 @@ export class WorkExperienceController {
   }
 
   @Delete(':id')
-  @Roles('job_seeker')
+  @Roles('job_seeker', 'admin')
   @ApiOperation({ summary: 'Delete work experience' })
   @ApiResponse({
     status: 200,

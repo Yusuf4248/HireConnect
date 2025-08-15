@@ -10,7 +10,7 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseGuards,
-} from "@nestjs/common";
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -18,7 +18,6 @@ import {
   ApiQuery,
   ApiParam,
   ApiBearerAuth,
-  ApiBody,
 } from "@nestjs/swagger";
 import { JobApplicationsService } from "./job-applications.service";
 import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
@@ -27,7 +26,6 @@ import { JobApplication } from "./entities/job-application.entity";
 import { AuthGuard } from "../common/guards/auth.guard";
 import { RolesGuard } from "../common/guards/roles.guard";
 import { Roles } from "../common/decorators/roles-auth.decorator";
-import { JobApplicationFiltersDto } from "./dto/job-application-filters.dto";
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -38,7 +36,7 @@ export class JobApplicationsController {
   ) {}
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('jobSeeker')
+  @Roles('job_seeker', 'admin')
   @Post()
   @ApiOperation({ summary: 'Create a new job application' })
   @ApiResponse({
