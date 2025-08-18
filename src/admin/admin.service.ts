@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,16 +28,22 @@ export class AdminService {
     return this.adminRepository.find();
   }
 
-  findOne(id: number) {
-    return this.adminRepository.findOne({ where: { id } });
+  async findOne(id: number) {
+    const admin = await this.adminRepository.findOne({ where: { id } });
+    if (!admin) {
+      throw new NotFoundException(`Admin with id-${id} not found`);
+    }
+    return admin;
   }
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
+    await this.findOne(id);
     await this.adminRepository.update(id, updateAdminDto);
     return this.findOne(id);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    await this.findOne(id);
     return this.adminRepository.delete(id);
   }
 

@@ -12,42 +12,34 @@ export class Contact {
   id: number;
 
   @ApiProperty({
-    example: 'https://github.com/username',
-    description: 'GitHub profile URL',
-    required: false,
+    example: 'Hr',
+    description: 'User(Hr, JobSeeker or Company)',
     nullable: true,
   })
   @Column({ type: 'varchar', nullable: true })
-  github_url: string;
+  table_name: string;
 
   @ApiProperty({
-    example: 'https://mywebsite.com',
-    description: 'Personal website URL',
-    required: false,
+    example: 1,
+    description: 'User`s id',
     nullable: true,
   })
-  @Column({ type: 'varchar', nullable: true })
-  website: string;
+  @Column({ type: 'integer', nullable: true })
+  table_id: number;
 
   @ApiProperty({
-    example: 'https://linkedin.com/in/username',
-    description: 'LinkedIn profile URL',
-    required: false,
+    example: 'Telegram',
+    description: 'Name of link',
     nullable: true,
   })
   @Column({ type: 'varchar', nullable: true })
-  linkedIn_url: string;
+  name: string;
 
   @ApiProperty({
     example: 'https://t.me/username',
-    description: 'Telegram profile URL',
-    required: false,
+    description: 'URL',
     nullable: true,
   })
   @Column({ type: 'varchar', nullable: true })
-  telegram_url: string;
-
-  // RELATION
-  @OneToOne(() => Company, (company) => company.contact)
-  company: Company;
+  url: string;
 }

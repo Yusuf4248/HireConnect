@@ -1,19 +1,24 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreateContactDto } from "./dto/create-contact.dto";
-import { UpdateContactDto } from "./dto/update-contact.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Contact } from "./entities/contact.entity";
-import { Repository } from "typeorm";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateContactDto } from './dto/create-contact.dto';
+import { UpdateContactDto } from './dto/update-contact.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Contact } from './entities/contact.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ContactsService {
   constructor(
-    @InjectRepository(Contact) private readonly contactRepo: Repository<Contact>
+    @InjectRepository(Contact)
+    private readonly contactRepo: Repository<Contact>,
   ) {}
-  async create(createContactDto: CreateContactDto) {
-    const newContact = await this.contactRepo.save(createContactDto);
+  async create(createContactDto: CreateContactDto, user: any) {
+    const newContact = await this.contactRepo.save({
+      ...createContactDto,
+      table_name: user.role,
+      table_id: user.id,
+    });
     return {
-      message: "New contact successfully created",
+      message: 'New contact successfully created',
       success: true,
       data: newContact,
     };
@@ -23,10 +28,10 @@ export class ContactsService {
     const [contacts, total] = await this.contactRepo.findAndCount({
       relations: [],
       skip: (page - 1) * limit,
-      order: { id: "ASC" },
+      order: { id: 'ASC' },
     });
     return {
-      message: "All contacts",
+      message: 'All contacts',
       success: true,
       data: contacts,
       total,
