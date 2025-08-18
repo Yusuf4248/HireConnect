@@ -9,6 +9,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
@@ -38,8 +39,9 @@ export class ContactsController {
   @ApiResponse({ status: 201, description: 'Contact successfully created' })
   @ApiResponse({ status: 400, description: 'Validation failed' })
   @ApiBody({ type: CreateContactDto })
-  create(@Body() createContactDto: CreateContactDto) {
-    return this.contactsService.create(createContactDto);
+  create(@Body() createContactDto: CreateContactDto, @Req() req: any) {
+    const user = req.user;
+    return this.contactsService.create(createContactDto, user);
   }
 
   @Get()

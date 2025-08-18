@@ -8,7 +8,7 @@ export class FileService {
   async saveImage(fileBuffer: Buffer, originalName): Promise<string> {
     const extension = path.extname(originalName).toLowerCase() || '.pdf';
     const fileName = `${uuidv4()}${extension}`;
-const dirpath = path.resolve(__dirname, '..', 'public', 'images');
+    const dirpath = path.resolve(__dirname, '..', '..', 'public', 'images');
 
     console.log('in FileService');
 

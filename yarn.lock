@@ -499,6 +499,7 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+<<<<<<< HEAD
 "@css-inline/css-inline-android-arm-eabi@0.14.1":
   version "0.14.1"
   resolved "https://registry.npmjs.org/@css-inline/css-inline-android-arm-eabi/-/css-inline-android-arm-eabi-0.14.1.tgz"
@@ -509,10 +510,13 @@
   resolved "https://registry.npmjs.org/@css-inline/css-inline-android-arm64/-/css-inline-android-arm64-0.14.1.tgz"
   integrity sha512-tH5us0NYGoTNBHOUHVV7j9KfJ4DtFOeTLA3cM0XNoMtArNu2pmaaBMFJPqECzavfXkLc7x5Z22UPZYjoyHfvCA==
 
+=======
+>>>>>>> bb7b8df3bf3119141fe221f75e559a19a1fc3968
 "@css-inline/css-inline-darwin-arm64@0.14.1":
   version "0.14.1"
   resolved "https://registry.npmjs.org/@css-inline/css-inline-darwin-arm64/-/css-inline-darwin-arm64-0.14.1.tgz"
   integrity sha512-QE5W1YRIfRayFrtrcK/wqEaxNaqLULPI0gZB4ArbFRd3d56IycvgBasDTHPre5qL2cXCO3VyPx+80XyHOaVkag==
+<<<<<<< HEAD
 
 "@css-inline/css-inline-darwin-x64@0.14.1":
   version "0.14.1"
@@ -548,6 +552,8 @@
   version "0.14.1"
   resolved "https://registry.npmjs.org/@css-inline/css-inline-win32-x64-msvc/-/css-inline-win32-x64-msvc-0.14.1.tgz"
   integrity sha512-nzotGiaiuiQW78EzsiwsHZXbxEt6DiMUFcDJ6dhiliomXxnlaPyBfZb6/FMBgRJOf6sknDt/5695OttNmbMYzg==
+=======
+>>>>>>> bb7b8df3bf3119141fe221f75e559a19a1fc3968
 
 "@css-inline/css-inline@0.14.1":
   version "0.14.1"
@@ -1241,6 +1247,7 @@
   resolved "https://registry.npmjs.org/@microsoft/tsdoc/-/tsdoc-0.15.1.tgz"
   integrity sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==
 
+<<<<<<< HEAD
 "@napi-rs/nice-android-arm-eabi@1.0.4":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@napi-rs/nice-android-arm-eabi/-/nice-android-arm-eabi-1.0.4.tgz"
@@ -1251,10 +1258,13 @@
   resolved "https://registry.npmjs.org/@napi-rs/nice-android-arm64/-/nice-android-arm64-1.0.4.tgz"
   integrity sha512-k8u7cjeA64vQWXZcRrPbmwjH8K09CBnNaPnI9L1D5N6iMPL3XYQzLcN6WwQonfcqCDv5OCY3IqX89goPTV4KMw==
 
+=======
+>>>>>>> bb7b8df3bf3119141fe221f75e559a19a1fc3968
 "@napi-rs/nice-darwin-arm64@1.0.4":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@napi-rs/nice-darwin-arm64/-/nice-darwin-arm64-1.0.4.tgz"
   integrity sha512-GsLdQvUcuVzoyzmtjsThnpaVEizAqH5yPHgnsBmq3JdVoVZHELFo7PuJEdfOH1DOHi2mPwB9sCJEstAYf3XCJA==
+<<<<<<< HEAD
 
 "@napi-rs/nice-darwin-x64@1.0.4":
   version "1.0.4"
@@ -1320,6 +1330,8 @@
   version "1.0.4"
   resolved "https://registry.npmjs.org/@napi-rs/nice-win32-x64-msvc/-/nice-win32-x64-msvc-1.0.4.tgz"
   integrity sha512-kCNk6HcRZquhw/whwh4rHsdPyOSCQCgnVDVik+Y9cuSVTDy3frpiCJTScJqPPS872h4JgZKkr/+CwcwttNEo9Q==
+=======
+>>>>>>> bb7b8df3bf3119141fe221f75e559a19a1fc3968
 
 "@napi-rs/nice@^1.0.1":
   version "1.0.4"
@@ -1719,6 +1731,7 @@
   resolved "https://registry.npmjs.org/@swc/core-darwin-arm64/-/core-darwin-arm64-1.13.3.tgz"
   integrity sha512-ux0Ws4pSpBTqbDS9GlVP354MekB1DwYlbxXU3VhnDr4GBcCOimpocx62x7cFJkSpEBF8bmX8+/TTCGKh4PbyXw==
 
+<<<<<<< HEAD
 "@swc/core-darwin-x64@1.13.3":
   version "1.13.3"
   resolved "https://registry.npmjs.org/@swc/core-darwin-x64/-/core-darwin-x64-1.13.3.tgz"
@@ -1764,6 +1777,8 @@
   resolved "https://registry.npmjs.org/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.13.3.tgz"
   integrity sha512-A+JSKGkRbPLVV2Kwx8TaDAV0yXIXm/gc8m98hSkVDGlPBBmydgzNdWy3X7HTUBM7IDk7YlWE7w2+RUGjdgpTmg==
 
+=======
+>>>>>>> bb7b8df3bf3119141fe221f75e559a19a1fc3968
 "@swc/core@^1.10.7", "@swc/core@^1.2.66", "@swc/core@^1.3.62", "@swc/core@>=1.2.50":
   version "1.13.3"
   resolved "https://registry.npmjs.org/@swc/core/-/core-1.13.3.tgz"

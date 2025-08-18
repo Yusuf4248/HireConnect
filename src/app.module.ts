@@ -23,6 +23,7 @@ import { winstonConfig } from './common/logger/winston.logger';
 import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from './mail/mail.module';
 import { OtpModule } from './otp/otp.module';
+import { CompanyHrSpecialistsModule } from './company_hr_specialists/company_hr_specialists.module';
 import { FiltersModule } from './filters/filters.module';
 
 @Module({
@@ -66,6 +67,7 @@ import { FiltersModule } from './filters/filters.module';
     MailModule,
     OtpModule,
     FiltersModule,
+    CompanyHrSpecialistsModule,
   ],
   controllers: [],
   providers: [],

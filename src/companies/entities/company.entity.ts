@@ -9,9 +9,8 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { Contact } from '../../contacts/entities/contact.entity';
-import { HrSpecialist } from '../../hr_specialists/entities/hr_specialist.entity';
 import { Job } from '../../jobs/entities/job.entity';
+import { CompanyHrSpecialist } from '../../company_hr_specialists/entities/company_hr_specialist.entity';
 
 @Entity('companies')
 export class Company {
@@ -121,13 +120,12 @@ export class Company {
   updated_at: Date;
 
   // RELATIONS
-  @OneToOne(() => Contact, (contact) => contact.company, { cascade: true })
-  @JoinColumn({ name: 'contact_id' })
-  contact: Contact;
-
-  @OneToMany(() => HrSpecialist, (hr) => hr.company)
-  hr_specialists: HrSpecialist[];
-
   @OneToMany(() => Job, (job) => job.company)
   jobs: Job[];
+
+  @OneToMany(
+    () => CompanyHrSpecialist,
+    (companyHrSpecialist) => companyHrSpecialist.company,
+  )
+  companyHrSpecialist: CompanyHrSpecialist[];
 }

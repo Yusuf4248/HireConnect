@@ -2,15 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Company } from '../../companies/entities/company.entity';
 import { Job } from '../../jobs/entities/job.entity';
+import { CompanyHrSpecialist } from '../../company_hr_specialists/entities/company_hr_specialist.entity';
 
 @Entity('hr_specialists')
 export class HrSpecialist {
@@ -34,13 +32,6 @@ export class HrSpecialist {
   })
   @Column({ type: 'varchar', length: 255 })
   password_hash: string;
-
-  @ApiProperty({
-    example: 1,
-    description: 'ID of the company the HR specialist belongs to',
-  })
-  @Column()
-  company_id: number;
 
   @ApiProperty({
     example: 'John',
@@ -81,13 +72,6 @@ export class HrSpecialist {
   department: string;
 
   @ApiProperty({
-    example: true,
-    description: 'Indicates if the HR specialist is a company admin',
-  })
-  @Column({ type: 'boolean', default: false })
-  is_company_admin: boolean;
-
-  @ApiProperty({
     example: '2025-08-05T08:45:00.123Z',
     description: 'The date and time when the HR specialist was created',
   })
@@ -117,10 +101,12 @@ export class HrSpecialist {
   refresh_token: string;
 
   // RELATIONS
-  @ManyToOne(() => Company, (company) => company.hr_specialists)
-  @JoinColumn({ name: 'company_id' })
-  company: Company;
-
   @OneToMany(() => Job, (job) => job.hr_specialist)
   jobs: Job[];
+
+  @OneToMany(
+    () => CompanyHrSpecialist,
+    (companyHrSpecialist) => companyHrSpecialist.hrSpecialist,
+  )
+  companyHrSpecialist: CompanyHrSpecialist[];
 }
