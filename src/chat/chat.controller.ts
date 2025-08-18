@@ -29,7 +29,7 @@ import { Roles } from '../common/decorators/roles-auth.decorator';
 @Controller('chats')
 @UseGuards(AuthGuard, RolesGuard)
 export class ChatsController {
-  constructor(private readonly chatsService: ChatsService) {}
+  constructor(private readonly chatsService: ChatsService) { }
 
   @Post()
   @Roles('job_seeker', 'hr', 'admin')
@@ -51,6 +51,17 @@ export class ChatsController {
   @ApiResponse({ status: 200, description: 'List of all chats', type: [Chat] })
   findAll() {
     return this.chatsService.findAll();
+  }
+
+  @Get('role/:role/userId/:id')
+  @Roles('job_seeker', 'hr', 'admin')
+  @ApiOperation({ summary: 'Get a chat by ID' })
+  @ApiParam({ name: 'id', description: 'Chat ID', type: String })
+  @ApiParam({ name: 'role', description: 'role', type: String })
+  @ApiResponse({ status: 200, description: 'Chat found', type: Chat })
+  @ApiResponse({ status: 404, description: 'Chat not found' })
+  findUserChats(@Param('role') role: string,@Param('id') id: string) {
+    return this.chatsService.findUserChats(role,Number(id));
   }
 
   @Get(':id')
