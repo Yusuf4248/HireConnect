@@ -1,27 +1,34 @@
-import { utilities as nestWinstonModuleUtilities } from "nest-winston";
-import { format, transports } from "winston";
+import * as winston from 'winston';
 
 export const winstonConfig = {
   transports: [
-    new transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        nestWinstonModuleUtilities.format.nestLike("HireConnect", {
-          prettyPrint: true,
-        })
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize({ all: true }),
+        winston.format.label({ label: 'HireConnect' }),
+        winston.format.timestamp(),
+        winston.format.printf(({ level, message, label, timestamp }) => {
+          return `${timestamp} [${label}] ${level}: ${message}`;
+        }),
       ),
     }),
-
-    new transports.File({
-      filename: "logs/error.log",
-      level: "error",
-      format: format.combine(format.timestamp(), format.json()),
+    new winston.transports.File({
+      filename: 'logs/combine.log',
+      level: 'info',
+      format: winston.format.combine(
+        winston.format.label({ label: 'HireConnect' }),
+        winston.format.timestamp(),
+        winston.format.json(),
+      ),
     }),
-
-    new transports.File({
-      filename: "logs/combined.log",
-      level: "info",
-      format: format.combine(format.timestamp(), format.json()),
+    new winston.transports.File({
+      filename: 'logs/error.log',
+      level: 'error',
+      format: winston.format.combine(
+        winston.format.label({ label: 'HireConnect' }),
+        winston.format.timestamp(),
+        winston.format.json(),
+      ),
     }),
   ],
 };
