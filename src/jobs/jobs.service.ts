@@ -37,34 +37,46 @@ export class JobsService {
   constructor(
     @InjectRepository(Job)
     private readonly jobRepository: Repository<Job>,
-  ) { }
+  ) {}
 
   async create(createJobDto: CreateJobDto): Promise<Job> {
     const job = this.jobRepository.create(createJobDto);
     return this.jobRepository.save(job);
   }
   findAll(): Promise<Job[]> {
-    return this.jobRepository.find({ relations: ["category"] });
+    return this.jobRepository.find({ relations: ['category'] });
   }
 
-async filters({ filters, pagination, sort }: FindAllOptions): Promise<{ items: Job[]; meta: any }> {
- const { page, limit } = pagination;
+  async filters({
+    filters,
+    pagination,
+    sort,
+  }: FindAllOptions): Promise<{ items: Job[]; meta: any }> {
+    const { page, limit } = pagination;
     const queryBuilder = this.jobRepository
       .createQueryBuilder('job')
       .leftJoinAndSelect('job.company', 'company')
       .leftJoinAndSelect('job.category', 'category');
 
     if (filters.location) {
-      queryBuilder.andWhere('job.location ILIKE :location', { location: `%${filters.location}%` });
+      queryBuilder.andWhere('job.location ILIKE :location', {
+        location: `%${filters.location}%`,
+      });
     }
     if (filters.min_salary) {
-      queryBuilder.andWhere('job.salary_min >= :salaryMin', { salaryMin: filters.min_salary });
+      queryBuilder.andWhere('job.salary_min >= :salaryMin', {
+        salaryMin: filters.min_salary,
+      });
     }
     if (filters.max_salary) {
-      queryBuilder.andWhere('job.max_salary <= :salaryMax', { salaryMax: filters.max_salary });
+      queryBuilder.andWhere('job.max_salary <= :salaryMax', {
+        salaryMax: filters.max_salary,
+      });
     }
     if (filters.experience_level) {
-      queryBuilder.andWhere('job.experience_level = :experienceLevel', { experienceLevel: filters.experience_level });
+      queryBuilder.andWhere('job.experience_level = :experienceLevel', {
+        experienceLevel: filters.experience_level,
+      });
     }
     if (filters.type) {
       queryBuilder.andWhere('job.type = :type', { type: filters.type });
@@ -73,7 +85,9 @@ async filters({ filters, pagination, sort }: FindAllOptions): Promise<{ items: J
       queryBuilder.andWhere('job.work = :work', { work: filters.work });
     }
     if (filters.is_remote) {
-      queryBuilder.andWhere('job.is_remote = :is_remote', { is_remote: filters.is_remote });
+      queryBuilder.andWhere('job.is_remote = :is_remote', {
+        is_remote: filters.is_remote,
+      });
     }
     if (filters.search) {
       queryBuilder.andWhere(
@@ -82,18 +96,26 @@ async filters({ filters, pagination, sort }: FindAllOptions): Promise<{ items: J
       );
     }
 
-    queryBuilder.orderBy(`job.${sort.sortBy}`, sort.sortOrder).skip((page - 1) * limit).take(limit);
+    queryBuilder
+      .orderBy(`job.${sort.sortBy}`, sort.sortOrder)
+      .skip((page - 1) * limit)
+      .take(limit);
 
     const [items, total] = await queryBuilder.getManyAndCount();
-    return { items, meta: { total, page, limit, totalPages: Math.ceil(total / limit) } };
+    return {
+      items,
+      meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
+    };
   }
 
   async findOne(id: number): Promise<Job> {
-    const job = await this.jobRepository.findOne({
+    const job1 = await this.jobRepository.findOne({
       where: { id },
       relations: ['company', 'category'],
     });
-    if (!job) throw new NotFoundException(`Job with id ${id} not found`);
+    if (!job1) throw new NotFoundException(`Job with id ${id} not found`);
+    job1.views_count += 1;
+    const job = await this.jobRepository.save(job1);
     return job;
   }
 
