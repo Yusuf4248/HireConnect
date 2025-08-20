@@ -24,6 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from './mail/mail.module';
 import { OtpModule } from './otp/otp.module';
 import { CompanyHrSpecialistsModule } from './company_hr_specialists/company_hr_specialists.module';
+import { FiltersModule } from './filters/filters.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { CompanyHrSpecialistsModule } from './company_hr_specialists/company_hr_
     AuthModule,
     MailModule,
     OtpModule,
+    FiltersModule,
     CompanyHrSpecialistsModule,
   ],
   controllers: [],
