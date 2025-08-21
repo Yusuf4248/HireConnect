@@ -35,14 +35,6 @@ export class Message {
   })
   sender_id: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  @ApiProperty({
-    example: 'Project Update',
-    description: 'Optional message subject',
-    nullable: true,
-  })
-  subject?: string;
-
   @Column({ type: 'text' })
   @ApiProperty({
     example: 'Hello, how are you?',

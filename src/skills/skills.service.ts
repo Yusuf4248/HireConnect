@@ -27,6 +27,7 @@ export class SkillsService {
     const [skills, total] = await this.skillRepo.findAndCount({
       relations: [],
       skip: (page - 1) * limit,
+      take: limit,
       order: { id: "ASC" },
     });
     return {

@@ -5,12 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from './entities/admin.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Company } from '../companies/entities/company.entity';
+import { CompanyStatus } from '../common/enums/company.enum';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectRepository(Admin)
     private adminRepository: Repository<Admin>,
+    @InjectRepository(Company)
+    private companyRepository: Repository<Company>,
   ) {}
 
   async create(createAdminDto: CreateAdminDto) {
@@ -53,5 +57,11 @@ export class AdminService {
 
   async updateTokenHash(id: number, hash: string) {
     await this.adminRepository.update(id, { refresh_token: hash });
+  }
+
+  async getAllPendingCompanies() {
+    return this.companyRepository.find({
+      where: { status: CompanyStatus.PENDING },
+    });
   }
 }

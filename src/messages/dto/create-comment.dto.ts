@@ -2,7 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional } from 'class-validator';
 
 export class CreateCommentDto {
-  @ApiProperty({ description: 'Chat ID associated with the message', type: String, example: '123' })
+  @ApiProperty({
+    description: 'Chat ID associated with the message',
+    type: String,
+    example: '123',
+  })
   @IsString()
   chat_id: string;
 
@@ -10,16 +14,19 @@ export class CreateCommentDto {
   @IsString()
   sender_id: string;
 
-  @ApiProperty({ description: 'Table name of the sender', type: String, example: 'users' })
+  @ApiProperty({
+    description: 'Table name of the sender',
+    type: String,
+    example: 'users',
+  })
   @IsString()
   sender_table_name: string;
 
-  @ApiProperty({ description: 'Message subject', type: String, required: false, example: 'Meeting Update' })
-  @IsString()
-  @IsOptional()
-  subject?: string;
-
-  @ApiProperty({ description: 'Message content', type: String, example: 'This is the message content.' })
+  @ApiProperty({
+    description: 'Message content',
+    type: String,
+    example: 'This is the message content.',
+  })
   @IsString()
   content: string;
 }

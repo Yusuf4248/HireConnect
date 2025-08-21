@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Job } from '../../jobs/entities/job.entity';
 import { CompanyHrSpecialist } from '../../company_hr_specialists/entities/company_hr_specialist.entity';
+import { CompanyStatus } from '../../common/enums/company.enum';
 
 @Entity('companies')
 export class Company {
@@ -90,11 +91,22 @@ export class Company {
   founded_year: number;
 
   @ApiProperty({
-    example: true,
-    description: 'Indicates whether the company is verified',
+    example: CompanyStatus.PENDING,
+    description: 'Status of company',
   })
-  @Column({ type: 'boolean', default: false })
-  is_verified: boolean;
+  @Column({
+    type: 'enum',
+    enum: CompanyStatus,
+    default: CompanyStatus.PENDING,
+  })
+  status: CompanyStatus;
+
+  @ApiProperty({
+    example: 1,
+    description: 'HR id which created this company',
+  })
+  @Column({ type: 'int', nullable: true })
+  hr_id: number;
 
   @ApiProperty({
     example: '2025-08-13T12:34:56.000Z',
