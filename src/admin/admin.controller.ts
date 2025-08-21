@@ -24,6 +24,7 @@ import { SelfAdminGuard } from '../common/guards/admin.self.guard';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { IsAdminGuard } from '../common/guards/is.admin.guard';
 import { IsSuperAdminGuard } from '../common/guards/is.super.admin.guard';
+import { Company } from '../companies/entities/company.entity';
 
 @ApiTags('Admin')
 @ApiBearerAuth()
@@ -94,5 +95,17 @@ export class AdminController {
   @ApiResponse({ status: 404, description: 'Admin not found' })
   remove(@Param('id') id: string) {
     return this.adminService.remove(+id);
+  }
+
+  @Get('not-verified-companies')
+  @UseGuards(IsAdminGuard)
+  @ApiOperation({ summary: 'Get all not verified companies' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of not verified companies',
+    type: [Company],
+  })
+  async getAllPendingCompanies() {
+    return this.adminService.getAllPendingCompanies();
   }
 }
