@@ -6,8 +6,6 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
 import { Job } from '../../jobs/entities/job.entity';
 import { CompanyHrSpecialist } from '../../company_hr_specialists/entities/company_hr_specialist.entity';
@@ -62,13 +60,6 @@ export class Company {
   })
   @Column({ type: 'varchar', length: 100 })
   industry: string;
-
-  @ApiProperty({
-    example: 'MEDIUM',
-    description: 'Size of the company (SMALL, MEDIUM, LARGE)',
-  })
-  @Column({ type: 'enum', enum: ['SMALL', 'MEDIUM', 'LARGE'] })
-  company_size: string;
 
   @ApiProperty({
     example: 'New York, USA',

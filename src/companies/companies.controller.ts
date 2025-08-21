@@ -7,6 +7,9 @@ import {
   Patch,
   Delete,
   UseGuards,
+  ParseIntPipe,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -19,12 +22,15 @@ import {
   ApiBody,
   ApiParam,
   ApiBearerAuth,
+  ApiConsumes,
 } from '@nestjs/swagger';
 import { IsHrGuard } from '../common/guards/is.hr.guard';
 import { IsAdminGuard } from '../common/guards/is.admin.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { AuthGuard } from '../common/guards/auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Company } from './entities/company.entity';
 
 @ApiTags('companies')
 @ApiBearerAuth()
@@ -35,16 +41,49 @@ export class CompaniesController {
 
   @Post()
   @Roles('hr', 'admin')
-  @ApiOperation({ summary: 'Create a new company' })
-  @ApiBody({ type: CreateCompanyDto })
+  @ApiOperation({ summary: 'Create a new company (with logo upload)' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiBody({
+    description: 'Company data with optional logo file',
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', example: 'Tech Corp' },
+        description: { type: 'string', example: 'A tech company' },
+        website: { type: 'string', example: 'https://techcorp.com' },
+        image: {
+          type: 'string',
+          format: 'binary',
+          description: 'Company image file',
+        },
+        industry: { type: 'string', example: 'Technology' },
+        location: { type: 'string', example: 'New York, NY' },
+        phone: { type: 'string', example: '+998901234567' },
+        email: { type: 'string', example: 'contact@techcorp.com' },
+        founded_year: { type: 'integer', example: 2010 },
+      },
+      required: [
+        'name',
+        'industry',
+        'location',
+        'phone',
+        'email',
+        'founded_year',
+      ],
+    },
+  })
   @ApiResponse({
     status: 201,
     description: 'Company created successfully',
-    type: CreateCompanyDto,
+    type: Company,
   })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
-  async create(@Body() createCompanyDto: CreateCompanyDto) {
-    return await this.companyService.createCompany(createCompanyDto);
+  async create(
+    @Body() createCompanyDto: CreateCompanyDto,
+    @UploadedFile() image: Express.Multer.File,
+  ): Promise<Company> {
+    return await this.companyService.createCompany(createCompanyDto, image);
   }
 
   @Get()
@@ -70,7 +109,7 @@ export class CompaniesController {
     type: CreateCompanyDto,
   })
   @ApiResponse({ status: 404, description: 'Company not found' })
-  async findById(@Param('id') id: string) {
+  async findById(@Param('id', ParseIntPipe) id: number) {
     return await this.companyService.findById(id);
   }
 
@@ -95,7 +134,7 @@ export class CompaniesController {
   @ApiParam({ name: 'id', description: 'Company ID', type: String })
   @ApiResponse({ status: 200, description: 'Company deleted successfully' })
   @ApiResponse({ status: 404, description: 'Company not found' })
-  async delete(@Param('id') id: string) {
-    return await this.companyService.delete(Number(id));
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return await this.companyService.delete(id);
   }
 }

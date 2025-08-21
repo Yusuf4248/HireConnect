@@ -15,7 +15,7 @@ async function start() {
       logger: WinstonModule.createLogger(winstonConfig),
     });
     app.use(cookieParser());
-    app.useStaticAssets(join(__dirname, 'public'), {
+    app.useStaticAssets(join(__dirname, '..', 'public'), {
       prefix: '/public/',
     });
     app.useGlobalPipes(new ValidationPipe());
