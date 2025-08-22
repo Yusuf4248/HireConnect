@@ -23,13 +23,14 @@ import {
 import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
-import { JobApplication } from 'src/job-applications/entities/job-application.entity';
-import { CreateJobApplicationDto } from 'src/job-applications/dto/create-job-application.dto';
+import { Job } from './entities/job.entity';
+import { JobsFilterDto } from '../filters/dto/jobs-filter.dto';
 
 @ApiTags('Jobs')
 @ApiBearerAuth()
 @Controller('jobs')
 export class JobsController {
+  jobsFilterService: any;
   constructor(private readonly jobsService: JobsService) {}
 
   @Post()
@@ -68,29 +69,16 @@ export class JobsController {
     return this.jobsService.search(term);
   }
 
-
-  @Get('filters')
-  @ApiOperation({ summary: 'Get filtered jobs' })
-  @ApiResponse({ status: 200, description: 'List of jobs', type: [CreateJobApplicationDto] })
-  @ApiBody({ type: CreateJobApplicationDto, description: 'Filter criteria for jobs' })
-  async filters(@Body() filters) {
-    const { location, min_salary, max_salary, experience_level, type, work, is_remote, search, page, limit, sort_by, sort_order } = filters;
-    return this.jobsService.filters({
-      filters: {
-        location,
-        min_salary,
-        max_salary,
-        experience_level,
-        type,
-        work,
-        is_remote,
-        search,
-      },
-      pagination: { page, limit },
-      sort: { sortBy: sort_by, sortOrder: sort_order },
-    });
+  @Get('filter')
+  @ApiOperation({ summary: 'Filter jobs based on multiple criteria' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of jobs matching the filter criteria',
+    type: [Job],
+  })
+  async filterJobs(@Query() filters: JobsFilterDto): Promise<Job[]> {
+    return this.jobsFilterService.filterJobs(filters);
   }
-
 
   @Get(':id')
   @UseGuards(AuthGuard, RolesGuard)

@@ -189,4 +189,7 @@ export class Job {
 
   @OneToMany(() => JobSkill, (skill) => skill.job)
   job_skills: JobSkill[];
+  
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  work_days?: string;
 }
