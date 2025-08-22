@@ -18,15 +18,15 @@ export class ChatsService {
   }
 
   async findAll(): Promise<Chat[]> {
-    return this.chatRepository.find({ relations: ['messages'] });
+    return this.chatRepository.find({ relations: ['messages','job_application'] });
   }
   async findUserChats(role:string,id:number){
     if (role=='job_seeker'){
-    return this.chatRepository.find({where:{job_seeker_id:id}})
+    return this.chatRepository.find({where:{job_seeker_id:id,}, relations:['job_application']})
     }
 
     if (role=='hr'){
-    return this.chatRepository.find({where:{hr_id:id}})
+    return this.chatRepository.find({where:{hr_id:id}, relations:['job_application']})
     }
   }
   async findOne(id: number): Promise<Chat> {
