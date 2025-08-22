@@ -1,55 +1,34 @@
-import { IsOptional, IsString, IsEnum, IsNumber } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { EmploymentType, ExperienceLevel } from '../../common/enums/jobs.enum';
 
 export class JobsFilterDto {
-  @IsOptional()
-  @IsString()
-  @ApiPropertyOptional({
-    description: 'Filter jobs by title (partial or full match)',
-    example: 'Backend Developer',
-  })
-  title?: string;
+  @ApiPropertyOptional({ enum: ExperienceLevel })
+  experience_level?: ExperienceLevel;
 
-  @IsOptional()
-  @IsString()
-  @ApiPropertyOptional({
-    description: 'Filter jobs by location (city or country)',
-    example: 'New York',
-  })
+  @ApiPropertyOptional({ enum: EmploymentType })
+  employment_type?: EmploymentType;
+
+  @ApiPropertyOptional({ example: 'USD' })
+  currency?: string;
+
+  @ApiPropertyOptional({ example: 500 })
+  min_salary?: number;
+
+  @ApiPropertyOptional({ example: 1500 })
+  max_salary?: number;
+
+  @ApiPropertyOptional({ example: 'Tashkent' })
   location?: string;
 
-  @IsOptional()
-  @IsNumber()
-  @ApiPropertyOptional({
-    description: 'Filter jobs with a minimum salary',
-    example: 1000,
-  })
-  minSalary?: number;
+  @ApiPropertyOptional({ example: '5/2' })
+  work_days?: string;
 
-  @IsOptional()
-  @IsNumber()
-  @ApiPropertyOptional({
-    description: 'Filter jobs with a maximum salary',
-    example: 5000,
-  })
-  maxSalary?: number;
+  @ApiPropertyOptional({ example: 3 })
+  category_id?: number;
 
-  @IsOptional()
-  @IsEnum(EmploymentType)
-  @ApiPropertyOptional({
-    description: 'Filter jobs by employment type',
-    enum: EmploymentType,
-    example: EmploymentType.FULL_TIME,
-  })
-  employmentType?: EmploymentType;
+  @ApiPropertyOptional({ example: 2 })
+  company_id?: number;
 
-  @IsOptional()
-  @IsEnum(ExperienceLevel)
-  @ApiPropertyOptional({
-    description: 'Filter jobs by required experience level',
-    enum: ExperienceLevel,
-    example: ExperienceLevel,
-  })
-  experienceLevel?: ExperienceLevel;
+  @ApiPropertyOptional({ type: [Number], example: [1, 2, 3] })
+  skills?: number[];
 }
