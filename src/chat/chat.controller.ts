@@ -29,7 +29,7 @@ import { Roles } from '../common/decorators/roles-auth.decorator';
 @Controller('chats')
 @UseGuards(AuthGuard, RolesGuard)
 export class ChatsController {
-  constructor(private readonly chatsService: ChatsService) { }
+  constructor(private readonly chatsService: ChatsService) {}
 
   @Post()
   @Roles('job_seeker', 'hr', 'admin')
@@ -60,8 +60,8 @@ export class ChatsController {
   @ApiParam({ name: 'role', description: 'role', type: String })
   @ApiResponse({ status: 200, description: 'Chat found', type: Chat })
   @ApiResponse({ status: 404, description: 'Chat not found' })
-  findUserChats(@Param('role') role: string,@Param('id') id: string) {
-    return this.chatsService.findUserChats(role,Number(id));
+  findUserChats(@Param('role') role: string, @Param('id') id: string) {
+    return this.chatsService.findUserChats(role, Number(id));
   }
 
   @Get(':id')

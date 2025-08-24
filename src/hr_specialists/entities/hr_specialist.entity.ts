@@ -9,6 +9,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Job } from '../../jobs/entities/job.entity';
 import { CompanyHrSpecialist } from '../../company_hr_specialists/entities/company_hr_specialist.entity';
+import { Chat } from '../../chat/entities/chat.entity';
 
 @Entity('hr_specialists')
 export class HrSpecialist {
@@ -109,4 +110,7 @@ export class HrSpecialist {
     (companyHrSpecialist) => companyHrSpecialist.hrSpecialist,
   )
   companyHrSpecialist: CompanyHrSpecialist[];
+
+  @OneToMany(() => Chat, (chat) => chat.hr_specialist)
+  chats: Chat[];
 }

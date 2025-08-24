@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from '../../companies/entities/company.entity';
 import { HrSpecialist } from '../../hr_specialists/entities/hr_specialist.entity';
@@ -12,17 +12,13 @@ export class CompanyHrSpecialist {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 1, description: 'Company ID', type: () => Company })
+  @ApiHideProperty()
   @ManyToOne(() => Company, (company) => company.companyHrSpecialist, {
     onDelete: 'CASCADE',
   })
   company: Company;
 
-  @ApiProperty({
-    example: 1,
-    description: 'HrSpecialist ID',
-    type: () => HrSpecialist,
-  })
+  @ApiHideProperty()
   @ManyToOne(
     () => HrSpecialist,
     (hrSpecialist) => hrSpecialist.companyHrSpecialist,
