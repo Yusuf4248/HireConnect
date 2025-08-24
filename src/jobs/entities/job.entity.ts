@@ -173,15 +173,12 @@ export class Job {
 
   // RELATIONS (Swagger qo‘shilmaydi)
   @ManyToOne(() => Company, (company) => company.jobs)
-  @JoinColumn({ name: 'company_id' })
   company: Company;
 
-  @ManyToOne(() => JobCategory, (company) => company.jobs)
-  @JoinColumn({ name: 'category_id' })
-  category: Company;
+  @ManyToOne(() => JobCategory, (category) => category.jobs)
+  category: JobCategory;
 
   @ManyToOne(() => HrSpecialist, (hr) => hr.jobs)
-  @JoinColumn({ name: 'hr_specialist_id' })
   hr_specialist: HrSpecialist;
 
   @OneToMany(() => JobApplication, (app) => app.job)

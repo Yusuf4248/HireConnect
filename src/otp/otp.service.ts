@@ -12,9 +12,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MailService } from '../mail/mail.service';
 import { decode, encode } from '../common/helpers/crypto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
-import { HrSpecialist } from '../hr_specialists/entities/hr_specialist.entity';
 import { JobSeeker } from '../job_seekers/entities/job_seeker.entity';
 import { Request, Response } from 'express';
+import { HrSpecialist } from '../hr_specialists/entities/hr_specialist.entity';
 
 @Injectable()
 export class OtpService {
