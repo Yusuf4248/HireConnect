@@ -14,6 +14,10 @@ export class CreateCommentDto {
   @IsString()
   sender_id: string;
 
+  @ApiProperty({ description: 'Send type', type: String, example: '456' })
+  @IsString()
+  type: string;
+
   @ApiProperty({
     description: 'Table name of the sender',
     type: String,

@@ -51,7 +51,7 @@ export class ChatsService {
   }
 
   async findAll(): Promise<Chat[]> {
-    return this.chatRepository.find({ relations: ['messages'] });
+    return this.chatRepository.find({ relations: ['messages','job_application'] });
   }
 
   async findUserChats(role: string, id: number) {
@@ -61,7 +61,7 @@ export class ChatsService {
 
     if (role == 'hr') {
       return this.chatRepository.find({ where: { hr_specialist: { id } } });
-    }
+  }
   }
 
   async findOne(id: number): Promise<Chat> {
