@@ -44,7 +44,7 @@ export class JobsService {
     return this.jobRepository.save(job);
   }
   findAll(): Promise<Job[]> {
-    return this.jobRepository.find({ relations: ['category'] });
+    return this.jobRepository.find({ relations: ['category','company', 'skills'] });
   }
 
   async filters({
