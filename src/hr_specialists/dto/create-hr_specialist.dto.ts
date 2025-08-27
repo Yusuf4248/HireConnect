@@ -30,13 +30,6 @@ export class CreateHrSpecialistDto {
   password_hash: string;
 
   @ApiProperty({
-    example: 1,
-    description: 'Associated company ID',
-  })
-  @IsNumber()
-  company_id: number;
-
-  @ApiProperty({
     example: 'John',
     description: 'First name of the HR specialist',
     maxLength: 100,
@@ -86,22 +79,4 @@ export class CreateHrSpecialistDto {
   @IsString()
   @MaxLength(100, { message: 'Department must not exceed 100 characters' })
   department?: string;
-
-  @ApiPropertyOptional({
-    example: false,
-    description: 'Is this HR specialist a company admin',
-    default: false,
-  })
-  @IsOptional()
-  @IsBoolean()
-  is_company_admin?: boolean;
-
-  @ApiPropertyOptional({
-    example: true,
-    description: 'Is user active',
-    default: true,
-  })
-  @IsOptional()
-  @IsBoolean({ message: 'is_active must be a boolean value' })
-  is_active?: boolean;
 }

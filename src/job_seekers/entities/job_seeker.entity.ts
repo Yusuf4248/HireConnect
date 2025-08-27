@@ -13,6 +13,7 @@ import { Resume } from '../../resume/entities/resume.entity';
 import { Education } from '../../education/entities/education.entity';
 import { JobSeekerSkill } from '../../job_seeker_skills/entities/job_seeker_skill.entity';
 import { JobApplication } from '../../job-applications/entities/job-application.entity';
+import { Chat } from '../../chat/entities/chat.entity';
 
 @Entity('job_seekers')
 export class JobSeeker {
@@ -174,4 +175,7 @@ export class JobSeeker {
 
   @OneToMany(() => JobSeekerSkill, (skill) => skill.job_seeker)
   job_seeker_skills: JobSeekerSkill[];
+
+  @OneToMany(() => Chat, (chat) => chat.job_seeker)
+  chats: Chat[];
 }

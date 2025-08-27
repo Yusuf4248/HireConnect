@@ -13,4 +13,3 @@ export class CreateChatDto {
   @ApiProperty({ description: 'Chat status', type: String, nullable: true })
   status?: string;
 }
-
