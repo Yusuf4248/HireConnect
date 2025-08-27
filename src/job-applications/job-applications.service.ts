@@ -3,8 +3,9 @@ import { CreateJobApplicationDto } from "./dto/create-job-application.dto";
 import { UpdateJobApplicationDto } from "./dto/update-job-application.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { JobApplication } from "./entities/job-application.entity";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { ChatsService } from "src/chat/chat.service";
+import { JobsService } from "src/jobs/jobs.service";
 
 
 interface JobApplicationFilters {
@@ -37,6 +38,7 @@ export class JobApplicationsService {
   constructor(
     @InjectRepository(JobApplication)
     private readonly jobApplicationRepo: Repository<JobApplication>,
+    private readonly jobService:JobsService,
 
   private readonly chatsService: ChatsService
   ) { }
@@ -70,6 +72,19 @@ export class JobApplicationsService {
       limit,
     };
   }
+
+
+async findHrApplications(hrid: number) {
+  const getHrByResumes = await this.jobService.findHrResumes(hrid);
+
+  const jobApplications = await this.jobApplicationRepo.find({
+    where: { job_id: In(getHrByResumes.map(job => job.id)) },
+    relations: ['job', 'job_seeker', 'chat'],
+  });
+
+  return jobApplications;
+}
+
 
   async findOne(id: number) {
     const jobApplication = await this.jobApplicationRepo.findOne({

@@ -98,6 +98,24 @@ export class JobApplicationsController {
     return this.jobApplicationsService.findAll(+page, +limit);
   }
 
+  // -------------------CRUD-----------------
+
+  @Get('hr/:hrid')
+  @ApiOperation({ summary: 'Get a job application by ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'Job application ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Job application found',
+    type: JobApplication,
+  })
+  @ApiResponse({ status: 404, description: 'Job application not found' })
+  findHrApplications(@Param('hrid') hrid: string) {
+    return this.jobApplicationsService.findOne(+hrid);
+  }
+
+
+  //-------------------CRUD-----------------
+
   @Get(':id')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('admin', 'hr','jobSeeker')

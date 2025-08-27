@@ -92,6 +92,19 @@ export class ResumeController {
     return this.resumeService.findAll();
   }
 
+  @Get('user/:id')
+  @ApiOperation({ summary: 'Get all resumes' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all resumes',
+    type: [CreateResumeDto],
+  })
+  findUserResumes(@Param('id') id: number
+  // ,@Param('role') role: string
+) {
+    return this.resumeService.findUserResumes(id);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a resume by ID' })
   @ApiParam({ name: 'id', description: 'Resume ID', type: String })

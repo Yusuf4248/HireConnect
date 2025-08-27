@@ -47,6 +47,10 @@ export class JobsService {
     return this.jobRepository.find({ relations: ['category'] });
   }
 
+  async findHrResumes(id: number) {
+    return this.jobRepository.find({ where:{hr_specialist_id:id} });
+  }
+
   async filters({
     filters,
     pagination,

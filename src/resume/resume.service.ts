@@ -39,6 +39,10 @@ export class ResumeService {
     return this.resumeRepository.find();
   }
 
+  async findUserResumes(id: number) {
+    return this.resumeRepository.find({ where: { job_seeker_id:id } });
+  }
+
   async findOne(id: number) {
     return this.resumeRepository.findOne({ where: { id } });
   }
