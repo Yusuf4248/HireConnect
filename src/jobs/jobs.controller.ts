@@ -80,6 +80,19 @@ export class JobsController {
     return this.jobsFilterService.filterJobs(filters);
   }
 
+  @Get('vacancie/:hrid')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('hr', 'admin')
+  @ApiOperation({ summary: 'Retrieve job postings by HR specialist ID' })
+  @ApiParam({ name: 'hrid', description: 'HR Specialist ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of jobs posted by the specified HR specialist.',
+  })
+  findByHr(@Param('hrid') hrid: string) {
+    return this.jobsService.findHrResumes(+hrid);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('job_seeker', 'hr', 'admin')
