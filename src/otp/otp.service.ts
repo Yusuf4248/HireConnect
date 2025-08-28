@@ -109,6 +109,8 @@ export class OtpService {
 
     res.clearCookie('verification_key');
     return {
+      sendHelloMail: await this.mailService.sendHelloMail(
+        otp_details.email,),
       message: 'Congratulations, you have been activated.',
     };
   }

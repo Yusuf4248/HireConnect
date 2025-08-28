@@ -20,14 +20,14 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         defaults: {
           from: `"Hire Connect" <${config.get<string>('SMTP_HOST')}>`,
         },
-        template: {
-          dir: join(__dirname, 'templates'),
-          adapter: new HandlebarsAdapter(),
-          template: 'otp',
-          options: {
-            strict: true,
-          },
+      template: {
+        dir: join(__dirname, 'templates'),
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
         },
+      },
+
       }),
       inject: [ConfigService],
     }),

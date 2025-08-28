@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobUz - Hisob Faollashtirildi!</title>
+    <style>
+        /* Email-safe CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo-section {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .company-name {
+            display: inline-block;
+            font-size: 28px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            margin: 20px auto;
+            line-height: 80px;
+            text-align: center;
+            font-size: 36px;
+            color: white;
+            display: block;
+        }
+
+        .main-content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .features-grid {
+            margin: 40px 0;
+        }
+
+        .features-row {
+            display: block;
+            width: 100%;
+        }
+
+        .feature {
+            display: inline-block;
+            width: 48%;
+            margin: 1%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .buttons-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            margin: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: 30px;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .divider {
+            height: 20px;
+            background: transparent;
+        }
+
+        /* Mobile responsive */
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .main-content {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 26px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .feature {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                max-width: 280px;
+                margin: 10px auto;
+            }
+        }
+
+        /* Fallback for gradient text */
+        .title {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <table role="presentation" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="container">
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="logo-section">
+                            <span class="logo">J</span>
+                            <span class="company-name">JobUz</span>
+                        </div>
+                        <div class="success-icon">✓</div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <h1 class="title">Tabriklaymiz! 🎉</h1>
+                        <p class="subtitle">
+                            Hisobingiz muvaffaqiyatli faollashtirildi!<br>
+                            Endi JobUz platformasining barcha imkoniyatlaridan foydalanishingiz mumkin.
+                        </p>
+
+                        <!-- Features Grid -->
+                        <div class="features-grid">
+                            <div class="features-row">
+                                <div class="feature">
+                                    <span class="feature-icon">🔍</span>
+                                    <div class="feature-title">Ish Qidirish</div>
+                                    <div class="feature-desc">Minglab ish o'rinlari orasidan tanlang</div>
+                                </div>
+                                <div class="feature">
+                                    <span class="feature-icon">📄</span>
+                                    <div class="feature-title">CV Yaratish</div>
+                                    <div class="feature-desc">Professional rezyume tuzing</div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="features-row">
+                                <div class="feature">
+                                    <span class="feature-icon">🤝</span>
+                                    <div class="feature-title">Networking</div>
+                                    <div class="feature-desc">Mutaxassislar bilan bog'laning</div>
+                                </div>
+                                <div class="feature">
+                                    <span class="feature-icon">📈</span>
+                                    <div class="feature-title">Karyera</div>
+                                    <div class="feature-desc">Karyerangizni rivojlantiring</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="buttons-section">
+                            <a href="https://jobuz.uz/login" class="btn btn-primary">
+                                🚀 Boshlash
+                            </a>
+                            <a href="https://jobuz.uz/dashboard" class="btn btn-secondary">
+                                👤 Profilga o'tish
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="footer">
+                        <strong>JobUz</strong> jamoasiga qo'shilganingiz uchun rahmat!<br>
+                        Savol yoki yordam kerak bo'lsa, <a href="mailto:support@jobuz.uz">support@jobuz.uz</a> orqali bog'laning.
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

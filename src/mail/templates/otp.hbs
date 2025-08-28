@@ -1,4 +1,566 @@
-<h3>Assalomu alaykum!</h3>
-<p>Sizning tasdiqlash kodingiz:</p>
-<h1>{{ otpCode }}</h1>
-<p>Bu kod 3 daqiqa ichida amal qiladi.</p>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobUz - Tasdiqlash Kodi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(2deg); }
+            66% { transform: translateY(-10px) rotate(-2deg); }
+        }
+        
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .email-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 700;
+            color: #667eea;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            position: relative;
+            z-index: 1;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .company-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tagline {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 60px 50px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .greeting {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .message {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+        
+        .otp-container {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #f8b500 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 40px rgba(255, 107, 157, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(255, 107, 157, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 25px 50px rgba(255, 107, 157, 0.4); }
+        }
+        
+        .otp-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: slideRight 2s ease-in-out infinite;
+        }
+        
+        @keyframes slideRight {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .security-icon {
+            font-size: 24px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .otp-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .otp-code {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 12px;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            margin: 20px 0;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+            to { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5); }
+        }
+        
+        .copy-hint {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 40px 0;
+            border-left: 5px solid #ff6b6b;
+            box-shadow: 0 10px 25px rgba(255, 216, 155, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warning::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd89b, #ff6b6b);
+            animation: progressBar 3s ease-in-out infinite;
+        }
+        
+        @keyframes progressBar {
+            0%, 100% { transform: scaleX(0); transform-origin: left; }
+            50% { transform: scaleX(1); transform-origin: left; }
+        }
+        
+        .warning-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-text {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        .security-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .security-item {
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .security-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+        }
+        
+        .security-item-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        
+        .security-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .security-item-text {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.4;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .company-info {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .contact-info {
+            margin: 24px 0;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-link {
+            color: #90cdf4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            color: #63b3ed;
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            margin: 24px 0;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 40px 30px;
+            }
+            
+            .header {
+                padding: 40px 30px;
+            }
+            
+            .otp-code {
+                font-size: 40px;
+                letter-spacing: 6px;
+            }
+            
+            .greeting {
+                font-size: 24px;
+            }
+            
+            .message {
+                font-size: 16px;
+            }
+            
+            .company-name {
+                font-size: 28px;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .footer {
+                padding: 30px 20px;
+            }
+            
+            .otp-code {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+            
+            .social-links {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-container">
+            <div class="header">
+                <div class="logo">JoUz</div>
+                <div class="company-name">JobUz</div>
+                <div class="tagline">Karyerangizning yangi bosqichi</div>
+            </div>
+            
+            <div class="content">
+                <div class="greeting">
+                    🔐 Assalomu alaykum!
+                </div>
+                
+                <div class="message">
+                    Hisobingizni tasdiqlash uchun quyidagi maxfiy kodni ishlatimg. Bu kod maxsus xavfsizlik protokoli orqali yaratilgan.
+                </div>
+                
+                <div class="otp-container">
+                    <div class="security-icon">🛡️</div>
+                    <div class="otp-label">Sizning tasdiqlash kodingiz</div>
+                    <div class="otp-code">{{OTP}}</div>
+                    <div class="copy-hint">Kodni nusxalab oling</div>
+                </div>
+                
+                <div class="security-features">
+                    <div class="security-item">
+                        <div class="security-item-icon">⏱️</div>
+                        <div class="security-item-title">5 daqiqa amal qiladi</div>
+                        <div class="security-item-text">Tezroq kiriting</div>
+                    </div>
+                    <div class="security-item">
+                        <div class="security-item-icon">🔒</div>
+                        <div class="security-item-title">Xavfsiz shifrlangan</div>
+                        <div class="security-item-text">256-bit shifrlash</div>
+                    </div>
+                    <div class="security-item">
+                        <div class="security-item-icon">🚫</div>
+                        <div class="security-item-title">Bir marta ishlatiladi</div>
+                        <div class="security-item-text">Takrorlanmaydi</div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <div class="warning-title">
+                        ⚠️ Muhim xavfsizlik eslatmasi
+                    </div>
+                    <div class="warning-text">
+                        Bu kodni <strong>hech kimga bermang</strong>. JobUz jamoasi sizdan hech qachon tasdiqlash kodini so'ramaydi. Agar shubhali faoliyat sezgan bo'lsangiz, darhol bizga xabar bering.
+                    </div>
+                </div>
+                
+                <div class="message">
+                    Agar siz bu so'rovni yubormagansiz, iltimos darhol 
+                    <a href="mailto:support@jobuz.uz" class="contact-link">qo'llab-quvvatlash xizmatiga</a> murojaat qiling.
+                </div>
+            </div>
+            
+            <div class="footer">
+                <div class="footer-content">
+                    <div class="company-info">
+                        <strong>JobUz</strong> - O'zbekistondagi #1 ish o'rinlari platformasi<br>
+                        <small>Ming-orol tumani, Toshkent, O'zbekiston 🇺🇿</small>
+                    </div>
+                    
+                    <div class="contact-info">
+                        Yordam kerakmi? 
+                        <a href="mailto:support@jobuz.uz" class="contact-link">support@jobuz.uz</a> 
+                        orqali bog'laning yoki 24/7 chat orqali murojaat qiling
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://t.me/uzgame_pc" class="social-link" title="Telegram">📱</a>
+                        <a href="https://t.me/uzgame_pc" class="social-link" title="Instagram">📷</a>
+                        <a href="https://t.me/uzgame_pc" class="social-link" title="LinkedIn">💼</a>
+                        <a href="https://t.me/uzgame_pc" class="social-link" title="Facebook">👥</a>
+                    </div>
+                    
+                    <div class="copyright">
+                        © 2024 JobUz. Barcha huquqlar himoyalangan. 
+                        Saytdan foydalanish orqali siz <a href="#" class="contact-link">Foydalanish shartlari</a>ni qabul qilasiz.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

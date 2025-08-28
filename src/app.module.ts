@@ -40,7 +40,9 @@ import { FiltersModule } from './filters/filters.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
-      dropSchema: false,
+      dropSchema: true,
+      logging: true,
+      logger: 'advanced-console',
     }),
     JwtModule.register({
       global: true,
