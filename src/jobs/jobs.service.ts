@@ -44,8 +44,8 @@ export class JobsService {
     return this.jobRepository.save(job);
   }
   findAll(): Promise<Job[]> {
-    return this.jobRepository.find({ relations: ['category','company', 'skills'] });
-  }
+    return this.jobRepository.find({ relations: ['category','company', 'job_skills'] });
+  } 
 
   async findHrResumes(id: number) {
     return this.jobRepository.find({ where:{hr_specialist_id:id} });

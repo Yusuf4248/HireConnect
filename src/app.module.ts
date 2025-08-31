@@ -40,7 +40,7 @@ import { FiltersModule } from './filters/filters.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
-      dropSchema: true,
+      dropSchema: false,
       logging: true,
       logger: 'advanced-console',
     }),
