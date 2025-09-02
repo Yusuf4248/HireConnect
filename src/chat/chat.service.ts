@@ -56,11 +56,11 @@ export class ChatsService {
 
   async findUserChats(role: string, id: number) {
     if (role == 'job_seeker') {
-      return this.chatRepository.find({ where: { job_seeker: { id } } });
+      return this.chatRepository.find({ where: { job_seeker: { id } },relations: ['messages','job_application']  });
     }
 
     if (role == 'hr') {
-      return this.chatRepository.find({ where: { hr_specialist: { id } } });
+      return this.chatRepository.find({ where: { hr_specialist: { id } },relations: ['messages','job_application'] });
   }
   }
 

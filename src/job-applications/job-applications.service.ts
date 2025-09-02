@@ -79,7 +79,7 @@ async findHrApplications(hrid: number) {
 
   const jobApplications = await this.jobApplicationRepo.find({
     where: { job_id: In(getHrByResumes.map(job => job.id)) },
-    relations: ['job', 'job_seeker', 'chat'],
+    relations: ['job', 'job_seeker'],
   });
 
   return jobApplications;

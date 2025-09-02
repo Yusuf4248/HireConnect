@@ -37,19 +37,23 @@ export class Chat {
   })
 
   // RELATION
-  @OneToOne(() => JobApplication, (app) => app.chat)
-  job_application: JobApplication;
+@ManyToOne(() => HrSpecialist, (hr_spec) => hr_spec.chats, {
+  onDelete: 'CASCADE',
+})
+@JoinColumn({ name: 'hr_specialist_id' })
+hr_specialist: HrSpecialist;
+
+@ManyToOne(() => JobSeeker, (job_seeker) => job_seeker.chats, {
+  onDelete: 'CASCADE',
+})
+@JoinColumn({ name: 'job_seeker_id' })
+job_seeker: JobSeeker;
+
+@OneToOne(() => JobApplication, (app) => app.chat)
+@JoinColumn({ name: 'job_application_id' })
+job_application: JobApplication;
+
 
   @OneToMany(() => Message, (message) => message.chat, { onDelete: 'CASCADE' })
   messages: Message[];
-
-  @ManyToOne(() => HrSpecialist, (hr_spec) => hr_spec.chats, {
-    onDelete: 'CASCADE',
-  })
-  hr_specialist: HrSpecialist;
-
-  @ManyToOne(() => JobSeeker, (job_seeker) => job_seeker.chats, {
-    onDelete: 'CASCADE',
-  })
-  job_seeker: JobSeeker;
 }

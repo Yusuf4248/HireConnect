@@ -110,7 +110,7 @@ export class JobApplicationsController {
   })
   @ApiResponse({ status: 404, description: 'Job application not found' })
   findHrApplications(@Param('hrid') hrid: string) {
-    return this.jobApplicationsService.findOne(+hrid);
+    return this.jobApplicationsService.findHrApplications(+hrid);
   }
 
 
