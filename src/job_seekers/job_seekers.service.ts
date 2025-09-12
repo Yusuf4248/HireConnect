@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { CreateJobSeekerDto } from './dto/create-job_seeker.dto';
 import { UpdateJobSeekerDto } from './dto/update-job_seeker.dto';
@@ -9,12 +10,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JobSeeker } from './entities/job_seeker.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { MailService } from '../mail/mail.service';
+import * as uuid from "uuid"
 
 @Injectable()
 export class JobSeekersService {
   constructor(
     @InjectRepository(JobSeeker)
     private readonly jobSeeker: Repository<JobSeeker>,
+    private readonly mailService: MailService,
   ) {}
 
   async create(createJobSeekerDto: CreateJobSeekerDto) {
@@ -27,6 +31,14 @@ export class JobSeekersService {
       ...createJobSeekerDto,
       password_hash: hashedPassword,
     });
+    const token = uuid.v4()
+    try {
+      console.log('Sending email to:', user.email);
+      // await this.mailService.sendActivationLink(user,token,user.first_name);
+    } catch (error) {
+      console.error('SendMail error:', error);
+      throw new ServiceUnavailableException('Email yuborishda xatolik');
+    }
 
     return this.jobSeeker.save(user);
   }

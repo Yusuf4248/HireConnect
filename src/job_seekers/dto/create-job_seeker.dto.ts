@@ -138,22 +138,4 @@ export class CreateJobSeekerDto {
   @MaxLength(100)
   preferred_job_title?: string;
 
-  @ApiPropertyOptional({
-    example: "active",
-    description: "Status",
-    enum: ["active", "inactive"],
-    default: "active",
-  })
-  @IsOptional()
-  @IsEnum(["active", "inactive"])
-  status?: string;
-
-  @ApiPropertyOptional({
-      example: true,
-      description: "Is user active",
-      default: true,
-    })
-    @IsOptional()
-    @IsBoolean({ message: "is_active must be a boolean value" })
-    is_active?: boolean;
 }

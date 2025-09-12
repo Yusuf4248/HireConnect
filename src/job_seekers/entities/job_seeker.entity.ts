@@ -148,7 +148,7 @@ export class JobSeeker {
   status: string;
 
   @ApiProperty({ example: true, description: 'Is active status flag' })
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'boolean', default: false })
   is_active: boolean;
 
   @ApiProperty({
